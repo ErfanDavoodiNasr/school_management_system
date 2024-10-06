@@ -1,6 +1,7 @@
 package model;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ public class Person {
     private int id;
     private String first_name;
     private String last_name;
-    private Date birthDate;
+    private LocalDate birthDate;
     private String nationalCode;
     private String phoneNumber;
 
@@ -42,6 +43,23 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
+    public Person(String first_name, String last_name, LocalDate birthDate, String nationalCode, String phoneNumber) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.birthDate = birthDate;
+        this.nationalCode = nationalCode;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Person(int id, String first_name, String last_name, LocalDate birthDate, String nationalCode, String phoneNumber) {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.birthDate = birthDate;
+        this.nationalCode = nationalCode;
+        this.phoneNumber = phoneNumber;
+    }
+
     public int getId() {
         return id;
     }
@@ -66,11 +84,11 @@ public class Person {
         this.last_name = last_name;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

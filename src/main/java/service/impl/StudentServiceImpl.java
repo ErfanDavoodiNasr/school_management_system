@@ -3,6 +3,7 @@ package service.impl;
 import model.Student;
 import repository.StudentRepository;
 import service.StudentService;
+import util.SecurityContext;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -19,6 +20,7 @@ public class StudentServiceImpl implements StudentService {
         if (student == null) {
             throw new IllegalArgumentException("Student cannot be null");
         }
+        SecurityContext.student = student;
         return sr.addStudent(student);
     }
 
@@ -62,5 +64,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudentByNationalCode(String nationalCode) throws SQLException {
         return sr.getStudentByNationalCode(nationalCode);
+    }
+
+    @Override
+    public boolean signIn(int studentId, String nationalCode) throws SQLException {
+        Student student = sr.getStudentByIdAndNationalCode(studentId,nationalCode);
+        if (student != null) {
+            SecurityContext.student = student;
+            return true;
+        }
+        return false;
     }
 }

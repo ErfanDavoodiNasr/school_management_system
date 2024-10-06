@@ -11,4 +11,5 @@ public interface StudentService {
     void printAllStudents() throws SQLException;
     Student generateStudent(String firstName, String lastName, String nationalCode) throws SQLException;
     Student getStudentByNationalCode(String nationalCode) throws SQLException;
+    boolean signIn(int studentId, String nationalCode) throws SQLException;
 }

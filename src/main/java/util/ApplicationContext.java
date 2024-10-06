@@ -1,21 +1,9 @@
 package util;
 
-import repository.CourseRepository;
-import repository.ExamRepository;
-import repository.StudentRepository;
-import repository.TeacherRepository;
-import repository.impl.CourseRepositoryImpl;
-import repository.impl.ExamRepositoryImpl;
-import repository.impl.StudentRepositoryImpl;
-import repository.impl.TeacherRepositoryImpl;
-import service.CourseService;
-import service.ExamService;
-import service.StudentService;
-import service.TeacherService;
-import service.impl.CourseServiceImpl;
-import service.impl.ExamServiceImpl;
-import service.impl.StudentServiceImpl;
-import service.impl.TeacherServiceImpl;
+import repository.*;
+import repository.impl.*;
+import service.*;
+import service.impl.*;
 
 public class ApplicationContext {
     private static final StudentRepository studentRepository;
@@ -26,6 +14,8 @@ public class ApplicationContext {
     private static final CourseRepository courseRepository;
     private static final ExamRepository examRepository;
     private static final ExamService examService;
+    private static final CoursesStudentRepository coursesStudentRepository;
+    private static final CoursesStudentService coursesStudentService;
 
     static {
         studentRepository = new StudentRepositoryImpl();
@@ -36,6 +26,8 @@ public class ApplicationContext {
         courseService = new CourseServiceImpl(courseRepository);
         examRepository = new ExamRepositoryImpl();
         examService = new ExamServiceImpl(examRepository);
+        coursesStudentRepository = new CoursesStudentRepositoryImpl();
+        coursesStudentService = new CoursesStudentServiceImpl(coursesStudentRepository,courseRepository);
     }
 
     public static StudentService getStudentService() {
@@ -51,5 +43,8 @@ public class ApplicationContext {
     }
     public static ExamService getExamService() {
         return examService;
+    }
+    public static CoursesStudentService getCoursesStudentService() {
+        return coursesStudentService;
     }
 }

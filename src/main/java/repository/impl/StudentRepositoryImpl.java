@@ -6,6 +6,7 @@ import repository.StudentRepository;
 import static data.Database.*;
 import static data.DatabaseQuery.*;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,10 @@ public class StudentRepositoryImpl implements StudentRepository {
         PreparedStatement pst = getPreparedStatement(ADD_NEW_STUDENT);
         pst.setString(1, student.getFirst_name());
         pst.setString(2, student.getLast_name());
-        pst.setString(3, student.getNationalCode());
+        pst.setDate(3,Date.valueOf(student.getBirthDate()));
+        pst.setDate(4, Date.valueOf(student.getEntryDate()));
+        pst.setString(5,student.getPhoneNumber());
+        pst.setString(6,student.getNationalCode());
         return pst.executeUpdate() > 0;
     }
 
@@ -65,6 +69,26 @@ public class StudentRepositoryImpl implements StudentRepository {
                     rs.getString("first_name"),
                     rs.getString("last_name"),
                     rs.getString("national_code")
+            );
+        }
+        return null;
+    }
+
+    @Override
+    public Student getStudentByIdAndNationalCode(int id, String nationalCode) throws SQLException {
+        PreparedStatement pst = getPreparedStatement(GET_STUDENT_BY_ID_NATIONAL_CODE);
+        pst.setInt(1, id);
+        pst.setString(2, nationalCode);
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            return new Student(
+                    rs.getInt("student_id"),
+                    rs.getString("first_name"),
+                    rs.getString("last_name"),
+                    rs.getDate("birth_date").toLocalDate(),
+                    rs.getString("national_code"),
+                    rs.getString("phone_number"),
+                    rs.getDate("entry_date").toLocalDate()
             );
         }
         return null;

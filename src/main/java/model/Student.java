@@ -1,10 +1,11 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Student extends Person {
-    private Date entryDate;
+    private LocalDate entryDate;
     private double averageScore;
 
     public Student() {
@@ -26,11 +27,27 @@ public class Student extends Person {
         super(first_name, last_name, nationalCode, phoneNumber);
     }
 
-    public Date getEntryDate() {
+    public Student(String first_name, String last_name, LocalDate birthDate, String nationalCode, String phoneNumber, LocalDate entryDate) {
+        super(first_name, last_name, birthDate, nationalCode, phoneNumber);
+        this.entryDate = entryDate;
+    }
+
+    public Student(int id, String first_name, String last_name, LocalDate birthDate, String nationalCode, String phoneNumber, LocalDate entryDate, double averageScore) {
+        super(id, first_name, last_name, birthDate, nationalCode, phoneNumber);
+        this.entryDate = entryDate;
+        this.averageScore = averageScore;
+    }
+
+    public Student(int studentId, String firstName, String lastName, LocalDate birthDate, String nationalCode, String phoneNumber, LocalDate entryDate) {
+        super(studentId,firstName,lastName,birthDate,nationalCode,phoneNumber);
+        this.entryDate = entryDate;
+    }
+
+    public LocalDate getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(Date entryDate) {
+    public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
 
