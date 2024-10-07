@@ -29,6 +29,15 @@ public class CoursesStudentServiceImpl implements CoursesStudentService {
     }
 
     @Override
+    public boolean removeCourse(String courseTitle) throws SQLException {
+        Course course = cr.getCourse(courseTitle);
+        if (course == null) {
+            throw new SQLException("Course not found");
+        }
+        return csr.deleteCourse(course.getCourseId(), SecurityContext.student.getId());
+    }
+
+    @Override
     public List<CourseDto> getCourses() throws SQLException {
         if (csr.getCourses() == null){
             return null;

@@ -25,7 +25,7 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
 
         // Find exam_id for the student
         PreparedStatement pst2 = getPreparedStatement(FIND_EXAM_STUDENT);
-        pst2.setInt(1, studentId);
+        pst2.setInt(1, courseId);
         ResultSet rs = pst2.executeQuery();
 
         // Insert into exams_students
@@ -42,8 +42,20 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
     }
 
     @Override
-    public boolean deleteCourse(int courseId, int studentId) {
-        return false;
+    public boolean deleteCourse(int courseId, int studentId) throws SQLException {
+        PreparedStatement pst1 = getPreparedStatement(DELETE_COURSE_STUDENT);
+        pst1.setInt(1, studentId);
+        pst1.setInt(2, courseId);
+        pst1.executeUpdate();
+        PreparedStatement pst2 = getPreparedStatement(FIND_EXAM_STUDENT);
+        pst2.setInt(1, courseId);
+        ResultSet rs = pst2.executeQuery();
+        if (rs.next()) {
+            PreparedStatement pst3 = getPreparedStatement(DELETE_EXAM_STUDENT);
+            pst3.setInt(1, rs.getInt("exam_id"));
+            pst3.executeUpdate();
+        }
+        return true;
     }
 
     @Override

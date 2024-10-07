@@ -16,6 +16,8 @@ public class ApplicationContext {
     private static final ExamService examService;
     private static final CoursesStudentRepository coursesStudentRepository;
     private static final CoursesStudentService coursesStudentService;
+    private static final AdminRepository adminRepository;
+    private static final AdminService adminService;
 
     static {
         studentRepository = new StudentRepositoryImpl();
@@ -27,8 +29,11 @@ public class ApplicationContext {
         examRepository = new ExamRepositoryImpl();
         examService = new ExamServiceImpl(examRepository);
         coursesStudentRepository = new CoursesStudentRepositoryImpl();
-        coursesStudentService = new CoursesStudentServiceImpl(coursesStudentRepository,courseRepository);
+        coursesStudentService = new CoursesStudentServiceImpl(coursesStudentRepository, courseRepository);
+        adminRepository = new AdminRepositoryImpl();
+        adminService = new AdminServiceImpl(adminRepository);
     }
+
 
     public static StudentService getStudentService() {
         return studentService;
@@ -41,10 +46,16 @@ public class ApplicationContext {
     public static CourseService getCourseService() {
         return courseService;
     }
+
     public static ExamService getExamService() {
         return examService;
     }
+
     public static CoursesStudentService getCoursesStudentService() {
         return coursesStudentService;
+    }
+
+    public static AdminService getAdminService() {
+        return adminService;
     }
 }

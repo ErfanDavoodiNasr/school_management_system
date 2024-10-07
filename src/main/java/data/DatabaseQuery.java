@@ -10,7 +10,9 @@ public class DatabaseQuery {
     public static final String UPDATE_STUDENT = "UPDATE students SET first_name = ?, last_name = ? WHERE national_code = ?";
     public static final String ADD_COURSE_STUDENT = "insert into courses_students(course_id, student_id) values (?,?)";
     public static final String ADD_EXAM_STUDENT = "insert into exams_students (student_id, exam_id) values (?,?);";
-    public static final String FIND_EXAM_STUDENT = "select e.exam_id from courses_students cs join exams e on e.course_id = cs.course_id where cs.student_id = ?";
+    public static final String FIND_EXAM_STUDENT = "select e.exam_id from courses c join exams e on e.course_id = c.course_id where c.course_id = ?";
+    public static final String DELETE_COURSE_STUDENT = "delete from courses_students cs where student_id = ? and course_id = ?";
+    public static final String DELETE_EXAM_STUDENT = "delete from exams_students where exam_id = ?";
     // teacher
     public static final String ADD_NEW_TEACHER = "INSERT INTO teachers (first_name, last_name, national_code) VALUES (?, ?, ?)";
     public static final String DELETE_TEACHER = "DELETE FROM teachers WHERE teacher_id = ?";
@@ -29,5 +31,6 @@ public class DatabaseQuery {
     // exam
     public static final String GET_ALL_EXAMS = "SELECT * FROM exams";
     public static final String ADD_NEW_EXAM = "INSERT INTO exams (course_id, exam_title, exam_date, exam_time) VALUES (?, ?, ?, ?)";
-
+    // admin
+    public static final String SIGN_IN_ADMIN = "select * from admin where id = ? and national_code = ?";
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import static ui.RunnerAdmin.adminMenu;
 import static ui.RunnerAdmin.teacher;
 import static ui.RunnerStudent.studentMenu;
 import static util.Help.*;
@@ -16,7 +17,7 @@ public class Runner {
             Integer input = intInput("choose a number: ");
             switch (input) {
                 case 1 -> studentMenu();
-                case 2 -> RunnerAdmin.run(); // TODO
+                case 2 -> adminMenu();
                 case 3 -> teacher(); // TODO
                 case 4 -> System.exit(0);
                 default -> println("choose a number between 1 and 3");

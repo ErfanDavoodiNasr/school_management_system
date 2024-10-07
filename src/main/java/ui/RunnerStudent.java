@@ -42,7 +42,10 @@ public class RunnerStudent {
                 case 2 -> removeCourseStudent();
                 case 3 -> showMyCourses();
                 case 4 -> showAllCoursesStudent();
-                case 5 -> signOutStudent();
+                case 5 -> {
+                    signOutStudent();
+                    return;
+                }
                 default -> println("choose a number between 1 and 5");
             }
 
@@ -77,7 +80,16 @@ public class RunnerStudent {
     }
 
     private static void removeCourseStudent() {
-        // TODO
+        try{
+            String input = input("enter course title: ");
+            if (ApplicationContext.getCoursesStudentService().removeCourse(input)){
+                println("Course removed");
+            }else {
+                println("Course not removed");
+            }
+        }catch (Exception e) {
+            println(e.getMessage());
+        }
     }
 
     private static void addCourseStudent() {

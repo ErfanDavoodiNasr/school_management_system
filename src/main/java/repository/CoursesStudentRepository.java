@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CoursesStudentRepository {
     boolean addCourse(int courseId, int studentId) throws SQLException;
-    boolean deleteCourse(int courseId, int studentId);
+    boolean deleteCourse(int courseId, int studentId) throws SQLException;
     List<CourseDto> getCourses() throws SQLException;
     List<CourseDto> getAllCourses() throws SQLException;
 }
