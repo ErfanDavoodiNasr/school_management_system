@@ -1,6 +1,7 @@
 package service.impl;
 
 import model.Course;
+import model.Exam;
 import repository.CourseRepository;
 import service.CourseService;
 

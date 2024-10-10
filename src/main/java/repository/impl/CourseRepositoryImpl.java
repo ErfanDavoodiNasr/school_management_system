@@ -1,15 +1,14 @@
 package repository.impl;
 
 import model.Course;
+import model.Exam;
 import model.dto.CourseDto;
 import repository.CourseRepository;
 import static data.Database.*;
 import static data.DatabaseQuery.*;
 import static repository.impl.CoursesStudentRepositoryImpl.getCourseDtos;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +34,9 @@ public class CourseRepositoryImpl implements CourseRepository {
 
     @Override
     public boolean deleteCourse(Course course) throws SQLException {
+        PreparedStatement pst2 = getPreparedStatement(DELETE_EXAM);
+        pst2.setInt(1, course.getCourseId());
+        pst2.executeUpdate();
         PreparedStatement pst = getPreparedStatement(DELETE_COURSE);
         pst.setInt(1, course.getCourseId());
         return pst.executeUpdate() > 0;

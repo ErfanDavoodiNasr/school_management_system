@@ -1,6 +1,7 @@
 package repository;
 
 import model.Course;
+import model.Exam;
 import model.dto.CourseDto;
 
 import java.sql.SQLException;

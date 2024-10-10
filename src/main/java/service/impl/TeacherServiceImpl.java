@@ -50,11 +50,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher generateTeacher(String firstName, String lastName, String nationalCode) throws SQLException {
+    public Teacher generateTeacher(String firstName, String lastName, String nationalCode, int courseId) throws SQLException {
         if (tr.getTeacherNationalCode(nationalCode) != null) {
             throw new IllegalArgumentException("Teacher already exists");
         } else {
-            return new Teacher(firstName, lastName, nationalCode);
+            return new Teacher(firstName, lastName, nationalCode,courseId);
         }
     }
 

@@ -1,6 +1,7 @@
 package service;
 
 import model.Course;
+import model.Exam;
 
 import java.sql.SQLException;
 import java.util.List;

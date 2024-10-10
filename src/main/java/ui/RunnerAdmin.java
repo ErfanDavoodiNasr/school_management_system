@@ -182,7 +182,8 @@ public class RunnerAdmin {
             String firstName = input("enter first name: ");
             String lastName = input("enter last name: ");
             String nationalCode = input("enter national code: ");
-            ApplicationContext.getTeacherService().addTeacher(new Teacher(firstName, lastName, nationalCode));
+            int courseId = intInput("enter course id: ");
+            ApplicationContext.getTeacherService().addTeacher(new Teacher(firstName, lastName, nationalCode, courseId));
             println("Teacher added");
         } catch (Exception e) {
             println(e.getMessage());
@@ -238,13 +239,14 @@ public class RunnerAdmin {
     private static void updateCourse() {
         try {
             String courseTitle = input("enter course title: ");
-            if (ApplicationContext.getCourseService().getCoursesByTitle(courseTitle) == null) {
+            Course course = ApplicationContext.getCourseService().getCoursesByTitle(courseTitle);
+            if (course == null) {
                 println("Course not found");
                 return;
             }
             int courseUnit = intInput("enter course unit: ");
             String newCourseTitle = input("enter course title: ");
-            ApplicationContext.getCourseService().updateCourse(courseTitle, new Course(newCourseTitle, courseUnit));
+            ApplicationContext.getCourseService().updateCourse(courseTitle, new Course(course.getCourseId(),newCourseTitle, courseUnit));
             println("Course updated");
         } catch (Exception e) {
             println(e.getMessage());
@@ -260,7 +262,8 @@ public class RunnerAdmin {
             }
             String firstName = input("enter first name: ");
             String lastName = input("enter last name: ");
-            ApplicationContext.getTeacherService().updateTeacher(nationalCode, new Teacher(firstName, lastName, nationalCode));
+            int courseId = intInput("enter courseId: ");
+            ApplicationContext.getTeacherService().updateTeacher(nationalCode, new Teacher(firstName, lastName, nationalCode,courseId));
             println("Teacher updated");
         } catch (Exception e) {
             println(e.getMessage());
