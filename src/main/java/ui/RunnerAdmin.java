@@ -34,8 +34,9 @@ public class RunnerAdmin {
         try {
             int i = intInput("enter id: ");
             String input = input("enter national code: ");
+            generateRandomCode();
             if (ApplicationContext.getAdminService().signIn(i,input)) {
-                println("student sign in success");
+                println("admin sign in success");
                 admin();
                 return;
             }
@@ -51,18 +52,16 @@ public class RunnerAdmin {
             println("1 - student setting");
             println("2 - teacher setting");
             println("3 - course setting");
-            println("4 - exam setting");
-            println("5 - return to last page");
+            println("4 - return to last page");
             Integer input = intInput("choose a number: ");
             switch (input) {
                 case 1 -> student();
                 case 2 -> teacher();
                 case 3 -> course();
-                case 4 -> teacher(); // TODO
-                case 5 -> {
+                case 4 -> {
                     return;
                 }
-                default -> println("choose a number between 1 and 5");
+                default -> println("choose a number between 1 and 4");
             }
         }
     }

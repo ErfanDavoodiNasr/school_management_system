@@ -34,17 +34,19 @@ public class CourseRepositoryImpl implements CourseRepository {
 
     @Override
     public boolean deleteCourse(Course course) throws SQLException {
-        PreparedStatement pst2 = getPreparedStatement(DELETE_EXAM);
-        pst2.setInt(1, course.getCourseId());
-        pst2.executeUpdate();
-        PreparedStatement pst = getPreparedStatement(DELETE_COURSE);
+        PreparedStatement pst = getPreparedStatement(DELETE_EXAM);
         pst.setInt(1, course.getCourseId());
-        return pst.executeUpdate() > 0;
+        int i = pst.executeUpdate();
+        pst = getPreparedStatement(DELETE_COURSE);
+        pst.setInt(1, course.getCourseId());
+        int j = pst.executeUpdate();
+        return  i > 0 && j > 0;
     }
 
     @Override
     public List<Course> getAllCourses() throws SQLException {
-        ResultSet rs = getResultSet(GET_ALL_COURSES);
+        PreparedStatement pst = getPreparedStatement(GET_ALL_COURSES);
+        ResultSet rs = pst.executeQuery();
         List<Course> courses = new ArrayList<>();
         while (rs.next()) {
             courses.add(new Course(

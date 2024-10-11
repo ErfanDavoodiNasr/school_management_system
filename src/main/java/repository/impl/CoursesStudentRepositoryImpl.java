@@ -17,45 +17,42 @@ import java.util.List;
 public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
     @Override
     public boolean addCourse(int courseId, int studentId) throws SQLException {
-        // Insert into courses_students
-        PreparedStatement pst1 = getPreparedStatement(ADD_COURSE_STUDENT);
-        pst1.setInt(1, courseId);
-        pst1.setInt(2, studentId);
-        pst1.executeUpdate();
-
-        // Find exam_id for the student
-        PreparedStatement pst2 = getPreparedStatement(FIND_EXAM_STUDENT);
-        pst2.setInt(1, courseId);
-        ResultSet rs = pst2.executeQuery();
-
-        // Insert into exams_students
+        PreparedStatement pst = getPreparedStatement(ADD_COURSE_STUDENT);
+        pst.setInt(1, courseId);
+        pst.setInt(2, studentId);
+        int i = pst.executeUpdate();
+        pst = getPreparedStatement(FIND_EXAM_STUDENT);
+        pst.setInt(1, courseId);
+        ResultSet rs = pst.executeQuery();
+        int j = 0;
         if (rs.next()) {
-            PreparedStatement pst3 = getPreparedStatement(ADD_EXAM_STUDENT);
-            pst3.setInt(1, studentId);
-            pst3.setInt(2, rs.getInt("exam_id"));
-            pst3.executeUpdate();
+            pst = getPreparedStatement(ADD_EXAM_STUDENT);
+            pst.setInt(1, studentId);
+            pst.setInt(2, rs.getInt("exam_id"));
+            j = pst.executeUpdate();
         } else {
             System.out.println("No exam found for the student.");
         }
 
-        return true;
+        return i > 0 && j > 0;
     }
 
     @Override
     public boolean deleteCourse(int courseId, int studentId) throws SQLException {
-        PreparedStatement pst1 = getPreparedStatement(DELETE_COURSE_STUDENT);
-        pst1.setInt(1, studentId);
-        pst1.setInt(2, courseId);
-        pst1.executeUpdate();
-        PreparedStatement pst2 = getPreparedStatement(FIND_EXAM_STUDENT);
-        pst2.setInt(1, courseId);
-        ResultSet rs = pst2.executeQuery();
+        PreparedStatement pst = getPreparedStatement(DELETE_COURSE_STUDENT);
+        pst.setInt(1, studentId);
+        pst.setInt(2, courseId);
+        int i = pst.executeUpdate();
+        pst = getPreparedStatement(FIND_EXAM_STUDENT);
+        pst.setInt(1, courseId);
+        ResultSet rs = pst.executeQuery();
+        int j = 0;
         if (rs.next()) {
-            PreparedStatement pst3 = getPreparedStatement(DELETE_EXAM_STUDENT);
-            pst3.setInt(1, rs.getInt("exam_id"));
-            pst3.executeUpdate();
+            pst = getPreparedStatement(DELETE_EXAM_STUDENT);
+            pst.setInt(1, rs.getInt("exam_id"));
+            j = pst.executeUpdate();
         }
-        return true;
+        return i > 0 && j > 0;
     }
 
     @Override
@@ -68,7 +65,8 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
 
     @Override
     public List<CourseDto> getAllCourses() throws SQLException {
-        ResultSet rs = getResultSet(GET_ALL_USER_COURSES);
+        PreparedStatement pst = getPreparedStatement(GET_ALL_USER_COURSES);
+        ResultSet rs = pst.executeQuery();
         return getCourseDtos(rs);
     }
 

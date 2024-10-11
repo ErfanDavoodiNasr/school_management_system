@@ -1,5 +1,6 @@
 package util;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Help {
@@ -27,5 +28,30 @@ public class Help {
 
     public static void println(String prompt) {
         System.out.println(prompt);
+    }
+
+    private static String getRandomCode() {
+        Random random = new Random();
+        StringBuilder code = new StringBuilder();
+
+        for (int i = 0; i < 5; i++) {
+            int digit = random.nextInt(10);
+            code.append(digit);
+        }
+
+        return code.toString();
+    }
+
+    public static void generateRandomCode() {
+        while (true) {
+            String randomCode = getRandomCode();
+            println(randomCode);
+            String enteredCode = input("enter random code: ");
+            if (!(enteredCode.equals(randomCode))) {
+                println("wrong code");
+            } else {
+                break;
+            }
+        }
     }
 }

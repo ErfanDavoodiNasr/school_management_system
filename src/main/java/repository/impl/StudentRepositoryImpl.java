@@ -45,7 +45,8 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public List<Student> getAllStudents() throws SQLException {
-        ResultSet rs = getResultSet(GET_ALL_STUDENTS);
+        PreparedStatement pst = getPreparedStatement(GET_ALL_STUDENTS);
+        ResultSet rs = pst.executeQuery();
         List<Student> students = new ArrayList<>();
         while (rs.next()) {
             students.add(new Student(

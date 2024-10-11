@@ -46,7 +46,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
     @Override
     public List<Teacher> getAllTeachers() throws SQLException {
-        ResultSet rs = getResultSet(GET_ALL_TEACHERS);
+        PreparedStatement pst = getPreparedStatement(GET_ALL_TEACHERS);
+        ResultSet rs = pst.executeQuery();
         List<Teacher> teachers = new ArrayList<>();
         while (rs.next()) {
             teachers.add(new Teacher(
