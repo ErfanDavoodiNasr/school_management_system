@@ -164,8 +164,8 @@ public class RunnerAdmin {
             int day = Integer.parseInt(examDate.substring(8, 10));
             int hour = Integer.parseInt(examTime.substring(0, 2));
             int minute = Integer.parseInt(examTime.substring(3, 5));
-            Course course = ApplicationContext.getCourseService().save(new Course(courseTitle, courseUnit));
-            ApplicationContext.getExamService().save(new Exam(course.getCourseId(),
+            ApplicationContext.getCourseService().save(new Course(courseTitle, courseUnit));
+            ApplicationContext.getExamService().save(new Exam(ApplicationContext.getCourseService().getByTitle(courseTitle).getCourseId(),
                     courseTitle,
                     LocalDate.of(year,month,day),
                     LocalTime.of(hour,minute)

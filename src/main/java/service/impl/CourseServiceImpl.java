@@ -14,7 +14,7 @@ public class CourseServiceImpl implements CourseService {
         this.cr = cr;
     }
     @Override
-    public Course save(Course course) throws SQLException {
+    public boolean save(Course course) throws SQLException {
         if (course == null) {
             throw new IllegalArgumentException("Course is null");
         }else{

@@ -14,12 +14,11 @@ import java.util.List;
 
 public class CourseRepositoryImpl implements CourseRepository {
     @Override
-    public Course save(Course course) throws SQLException {
+    public boolean save(Course course) throws SQLException {
         PreparedStatement pst = getPreparedStatement(ADD_NEW_COURSE);
         pst.setString(1, course.getCourseTitle());
         pst.setInt(2, course.getCourseUnit());
-        pst.executeUpdate();
-        return getByTitle(course.getCourseTitle());
+        return pst.executeUpdate() > 0;
     }
 
     @Override
