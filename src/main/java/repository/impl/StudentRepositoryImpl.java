@@ -1,6 +1,7 @@
 package repository.impl;
 
 import model.Student;
+import model.Teacher;
 import repository.StudentRepository;
 
 import static data.Database.*;
@@ -83,7 +84,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student getByIdAndNationalCode(int id, String nationalCode) throws SQLException {
-        PreparedStatement pst = getPreparedStatement(GET_STUDENT_BY_ID_NATIONAL_CODE);
+        PreparedStatement pst = getPreparedStatement(GET_TEACHER_BY_ID_NATIONAL_CODE);
         pst.setInt(1, id);
         pst.setString(2, nationalCode);
         ResultSet rs = pst.executeQuery();

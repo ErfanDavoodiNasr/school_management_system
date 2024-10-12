@@ -3,6 +3,7 @@ package ui;
 import static ui.RunnerAdmin.adminMenu;
 import static ui.RunnerAdmin.teacher;
 import static ui.RunnerStudent.studentMenu;
+import static ui.RunnerTeacher.teacherMenu;
 import static util.Help.*;
 
 public class Runner {
@@ -18,7 +19,7 @@ public class Runner {
             switch (input) {
                 case 1 -> studentMenu();
                 case 2 -> adminMenu();
-                case 3 -> teacher(); // TODO
+                case 3 -> teacherMenu();
                 case 4 -> System.exit(0);
                 default -> println("choose a number between 1 and 3");
             }

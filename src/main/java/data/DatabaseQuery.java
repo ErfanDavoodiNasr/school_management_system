@@ -15,12 +15,15 @@ public class DatabaseQuery {
     public static final String DELETE_EXAM_STUDENT = "delete from exams_students where exam_id = ?";
     public static final String DELETE_STUDENT_ID_EXAM = "DELETE FROM exams_students WHERE student_id = ?";
     public static final String DELETE_STUDENT_ID_COURSES = "DELETE FROM courses_students WHERE student_id = ?";
+    public static final String GRADING_TO_STUDENT = "UPDATE students SET avg_score = ? WHERE national_code = ?";
     // teacher
     public static final String ADD_NEW_TEACHER = "INSERT INTO teachers (first_name, last_name, national_code, course_id) VALUES (?, ?, ?, ?)";
     public static final String DELETE_TEACHER = "DELETE FROM teachers WHERE teacher_id = ?";
     public static final String GET_TEACHER_BY_NATIONAL_CODE = "SELECT * FROM teachers WHERE national_code = ?";
     public static final String GET_ALL_TEACHERS = "SELECT * FROM teachers order by last_name,first_name,teacher_id";
     public static final String UPDATE_TEACHER = "UPDATE teachers SET first_name = ?, last_name = ?, course_id = ? WHERE national_code = ?";
+    public static final String GET_TEACHER_BY_ID_NATIONAL_CODE = "select * from teachers where teacher_id = ? and national_code = ?";
+    public static final String SHOW_TEACHER_STUDENTS = "select s.student_id, concat(s.first_name , ' ' , s.last_name) as full_name, s.national_code, s.avg_score from teachers t join courses_students cs on t.course_id = cs.course_id join students s on cs.student_id = s.student_id where t.teacher_id = ?;";
     // course
     public static final String GET_ALL_COURSES = "SELECT * FROM courses";
     public static final String ADD_NEW_COURSE = "INSERT INTO courses (course_title, course_unit) VALUES (?, ?)";

@@ -17,6 +17,18 @@ public class Help {
         return number;
     }
 
+    public static Double doubleInput(String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Please enter a valid number.");
+            scanner.next(); // Clear the invalid input
+            System.out.print(prompt);
+        }
+        Double number = scanner.nextDouble();
+        scanner.nextLine(); // Clear the newline character
+        return number;
+    }
+
     public static String input(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();

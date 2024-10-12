@@ -1,6 +1,9 @@
 package repository;
 
+import model.Student;
 import model.Teacher;
+import model.dto.TeacherStudentDto;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,4 +22,9 @@ public interface TeacherRepository extends BaseRepository<Teacher> {
 
     Teacher getByNationalCode(String nationalCode) throws SQLException;
 
+    List<TeacherStudentDto> getAllStudents() throws SQLException;
+
+    Teacher getByIdAndNationalCode(int id, String nationalCode) throws SQLException;
+
+    boolean grading(String nationalCodeStudent, double avgScore) throws SQLException;
 }

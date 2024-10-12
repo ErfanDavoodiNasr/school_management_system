@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Teacher extends Person {
     private int courseId;
 
@@ -13,6 +15,12 @@ public class Teacher extends Person {
 
     public Teacher(int id, String first_name, String last_name, String nationalCode) {
         super(id, first_name, last_name, nationalCode);
+    }
+
+    public Teacher(int teacherId, String firstName, String lastName, LocalDate birthDate, String nationalCode, String phoneNumber, LocalDate entryDate) {
+        this(teacherId, firstName, lastName, nationalCode);
+        this.setBirthDate(birthDate);
+        this.setPhoneNumber(phoneNumber);
     }
 
 
