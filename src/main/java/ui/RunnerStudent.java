@@ -3,13 +3,11 @@ package ui;
 import model.Student;
 import model.dto.CourseDto;
 import util.ApplicationContext;
-import util.Help;
 import util.SecurityContext;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static ui.RunnerAdmin.addStudent;
 import static util.Help.*;
 
 public class RunnerStudent {
@@ -43,23 +41,22 @@ public class RunnerStudent {
             int month = Integer.parseInt(birthDate.substring(5, 7));
             int day = Integer.parseInt(birthDate.substring(8, 10));
             generateRandomCode();
-            if (ApplicationContext.getStudentService().addStudent(new Student(
+            if (ApplicationContext.getStudentService().save(new Student(
                     firstName,
                     lastName,
                     LocalDate.of(year, month, day),
                     nationalCode,
                     phoneNumber,
                     LocalDate.now()
-            ))){
+            ))) {
                 println("Student added successfully");
-            }else {
+            } else {
                 println("Student not added successfully");
             }
         } catch (Exception e) {
             println(e.getMessage());
         }
     }
-
 
 
     public static void student() {
@@ -87,7 +84,7 @@ public class RunnerStudent {
 
     private static void showAllCoursesStudent() {
         try {
-            List<CourseDto> courses = ApplicationContext.getCoursesStudentService().getAllCourses();
+            List<CourseDto> courses = ApplicationContext.getCoursesStudentService().getAll();
             System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", "title", "credit", "teacher", "date", "time");
             for (CourseDto course : courses) {
                 System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", course.getCourseTitle(), course.getCourseUnit(), course.getTeacherName(), course.getExamDate(), course.getExamTime());
@@ -103,7 +100,7 @@ public class RunnerStudent {
 
     public static void showMyCourses() {
         try {
-            List<CourseDto> courses = ApplicationContext.getCoursesStudentService().getCourses();
+            List<CourseDto> courses = ApplicationContext.getCoursesStudentService().getAllUserCourses();
             System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", "title", "credit", "teacher", "date", "time");
             for (CourseDto course : courses) {
                 System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", course.getCourseTitle(), course.getCourseUnit(), course.getTeacherName(), course.getExamDate(), course.getExamTime());
@@ -117,7 +114,7 @@ public class RunnerStudent {
     private static void removeCourseStudent() {
         try {
             String input = input("enter course title: ");
-            if (ApplicationContext.getCoursesStudentService().removeCourse(input)) {
+            if (ApplicationContext.getCoursesStudentService().remove(input)) {
                 println("Course removed");
             } else {
                 println("Course not removed");
@@ -130,7 +127,7 @@ public class RunnerStudent {
     private static void addCourseStudent() {
         try {
             String input = input("enter course title: ");
-            if (ApplicationContext.getCoursesStudentService().addCourse(input)) {
+            if (ApplicationContext.getCoursesStudentService().save(input)) {
                 println("Course added");
             } else {
                 println("Course not added");

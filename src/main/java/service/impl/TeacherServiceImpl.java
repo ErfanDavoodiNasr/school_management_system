@@ -15,30 +15,30 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public boolean addTeacher(Teacher teacher) throws SQLException {
+    public boolean save(Teacher teacher) throws SQLException {
         if (teacher == null) {
             throw new IllegalArgumentException("Student cannot be null");
         }
-        return tr.addTeacher(teacher);
+        return tr.save(teacher);
     }
 
     @Override
-    public boolean removeTeacher(String nationalCode) throws SQLException {
-        return tr.removeTeacher(tr.getTeacherNationalCode(nationalCode));
+    public boolean remove(String nationalCode) throws SQLException {
+        return tr.remove(tr.getByNationalCode(nationalCode));
     }
 
     @Override
-    public boolean updateTeacher(String nationalCode, Teacher newTeacher) throws SQLException {
-        if (tr.getTeacherNationalCode(nationalCode) == null || newTeacher == null) {
+    public boolean update(String nationalCode, Teacher newTeacher) throws SQLException {
+        if (tr.getByNationalCode(nationalCode) == null || newTeacher == null) {
             throw new IllegalArgumentException("Teacher does not exist");
         }else {
-            return tr.updateTeacher(newTeacher);
+            return tr.update(newTeacher);
         }
     }
 
     @Override
-    public void printAllTeachers() throws SQLException {
-        List<Teacher> teachers = tr.getAllTeachers();
+    public void printAll() throws SQLException {
+        List<Teacher> teachers = tr.getAll();
         System.out.printf("%-7s %-13s %-13s %-17s\n", "id", "first name", "last name", "national code");
         for (Teacher teacher : teachers) {
             System.out.printf("%-7s %-13s %-13s %-17s\n",
@@ -49,17 +49,9 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
-    @Override
-    public Teacher generateTeacher(String firstName, String lastName, String nationalCode, int courseId) throws SQLException {
-        if (tr.getTeacherNationalCode(nationalCode) != null) {
-            throw new IllegalArgumentException("Teacher already exists");
-        } else {
-            return new Teacher(firstName, lastName, nationalCode,courseId);
-        }
-    }
 
     @Override
-    public Teacher getTeacherByNationalCode(String nationalCode) throws SQLException {
-        return tr.getTeacherNationalCode(nationalCode);
+    public Teacher getByNationalCode(String nationalCode) throws SQLException {
+        return tr.getByNationalCode(nationalCode);
     }
 }

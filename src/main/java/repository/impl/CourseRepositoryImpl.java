@@ -1,7 +1,6 @@
 package repository.impl;
 
 import model.Course;
-import model.Exam;
 import model.dto.CourseDto;
 import repository.CourseRepository;
 import static data.Database.*;
@@ -15,16 +14,16 @@ import java.util.List;
 
 public class CourseRepositoryImpl implements CourseRepository {
     @Override
-    public Course addCourse(Course course) throws SQLException {
+    public Course save(Course course) throws SQLException {
         PreparedStatement pst = getPreparedStatement(ADD_NEW_COURSE);
         pst.setString(1, course.getCourseTitle());
         pst.setInt(2, course.getCourseUnit());
         pst.executeUpdate();
-        return getCourse(course.getCourseTitle());
+        return getByTitle(course.getCourseTitle());
     }
 
     @Override
-    public boolean updateCourse(Course course) throws SQLException {
+    public boolean update(Course course) throws SQLException {
         PreparedStatement pst = getPreparedStatement(UPDATE_COURSE);
         pst.setString(1, course.getCourseTitle());
         pst.setInt(2, course.getCourseUnit());
@@ -33,7 +32,7 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public boolean deleteCourse(Course course) throws SQLException {
+    public boolean remove(Course course) throws SQLException {
         PreparedStatement pst = getPreparedStatement(DELETE_EXAM);
         pst.setInt(1, course.getCourseId());
         int i = pst.executeUpdate();
@@ -44,7 +43,7 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public List<Course> getAllCourses() throws SQLException {
+    public List<Course> getAll() throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_ALL_COURSES);
         ResultSet rs = pst.executeQuery();
         List<Course> courses = new ArrayList<>();
@@ -58,7 +57,7 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public Course getCourse(String courseTitle) throws SQLException {
+    public Course getByTitle(String courseTitle) throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_COURSE_BY_COURSE_TITLE);
         pst.setString(1, courseTitle);
         ResultSet rs = pst.executeQuery();
@@ -68,12 +67,5 @@ public class CourseRepositoryImpl implements CourseRepository {
                     rs.getInt("course_unit"));
         }
         return null;
-    }
-
-    @Override
-    public List<CourseDto> getAllCoursesDto() throws SQLException {
-        PreparedStatement pst = getPreparedStatement(GET_COURSES_DTO);
-        ResultSet rs = pst.executeQuery();
-        return getCourseDtos(rs);
     }
 }

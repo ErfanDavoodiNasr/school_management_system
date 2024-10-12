@@ -20,36 +20,36 @@ public class CoursesStudentServiceImpl implements CoursesStudentService {
     }
 
     @Override
-    public boolean addCourse(String courseTitle) throws SQLException {
-        Course course = cr.getCourse(courseTitle);
+    public boolean save(String courseTitle) throws SQLException {
+        Course course = cr.getByTitle(courseTitle);
         if (course == null) {
             throw new SQLException("Course not found");
         }
-        return csr.addCourse(course.getCourseId(), SecurityContext.student.getId());
+        return csr.save(course.getCourseId(), SecurityContext.student.getId());
     }
 
     @Override
-    public boolean removeCourse(String courseTitle) throws SQLException {
-        Course course = cr.getCourse(courseTitle);
+    public boolean remove(String courseTitle) throws SQLException {
+        Course course = cr.getByTitle(courseTitle);
         if (course == null) {
             throw new SQLException("Course not found");
         }
-        return csr.deleteCourse(course.getCourseId(), SecurityContext.student.getId());
+        return csr.remove(course.getCourseId(), SecurityContext.student.getId());
     }
 
     @Override
-    public List<CourseDto> getCourses() throws SQLException {
-        if (csr.getCourses() == null){
+    public List<CourseDto> getAllUserCourses() throws SQLException {
+        if (csr.getAllUserCourses() == null){
             return null;
         }
-        return csr.getCourses();
+        return csr.getAllUserCourses();
     }
 
     @Override
-    public List<CourseDto> getAllCourses() throws SQLException {
-        if (csr.getAllCourses() == null){
+    public List<CourseDto> getAll() throws SQLException {
+        if (csr.getAll() == null){
             return null;
         }
-        return csr.getAllCourses();
+        return csr.getAll();
     }
 }

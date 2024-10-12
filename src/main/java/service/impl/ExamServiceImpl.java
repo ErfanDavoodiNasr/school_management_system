@@ -14,11 +14,11 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public boolean addExam(Exam exam) throws SQLException {
+    public boolean save(Exam exam) throws SQLException {
         if (exam == null) {
             throw new IllegalArgumentException("exam is null");
         }else {
-            return er.addExam(exam);
+            return er.save(exam);
         }
     }
 }

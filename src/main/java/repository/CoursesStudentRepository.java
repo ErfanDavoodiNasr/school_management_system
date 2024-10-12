@@ -1,14 +1,13 @@
 package repository;
 
-import model.Course;
 import model.dto.CourseDto;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface CoursesStudentRepository {
-    boolean addCourse(int courseId, int studentId) throws SQLException;
-    boolean deleteCourse(int courseId, int studentId) throws SQLException;
-    List<CourseDto> getCourses() throws SQLException;
-    List<CourseDto> getAllCourses() throws SQLException;
+    boolean save(int courseId, int studentId) throws SQLException;
+    boolean remove(int courseId, int studentId) throws SQLException;
+    List<CourseDto> getAllUserCourses() throws SQLException;
+    List<CourseDto> getAll() throws SQLException;
 }

@@ -12,7 +12,7 @@ import java.sql.Time;
 
 public class ExamRepositoryImpl implements ExamRepository {
     @Override
-    public boolean addExam(Exam exam) throws SQLException {
+    public boolean save(Exam exam) throws SQLException {
         PreparedStatement pst = getPreparedStatement(ADD_NEW_EXAM);
         pst.setInt(1,exam.getCourseId());
         pst.setString(2,exam.getExamTitle());

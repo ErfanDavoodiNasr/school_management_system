@@ -16,32 +16,32 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public boolean addStudent(Student student) throws SQLException {
+    public boolean save(Student student) throws SQLException {
         if (student == null) {
             throw new IllegalArgumentException("Student cannot be null");
         }
         SecurityContext.student = student;
-        return sr.addStudent(student);
+        return sr.save(student);
     }
 
     @Override
-    public boolean removeStudent(String nationalCode) throws SQLException {
-        return sr.removeStudent(sr.getStudentByNationalCode(nationalCode));
+    public boolean remove(String nationalCode) throws SQLException {
+        return sr.remove(sr.getByNationalCode(nationalCode));
     }
 
     @Override
-    public boolean updateStudent(String nationalCode, Student newStudent) throws SQLException {
+    public boolean update(String nationalCode, Student newStudent) throws SQLException {
         if (newStudent == null) {
             throw new IllegalArgumentException("Student does not exist");
         }else {
-            return sr.updateStudent(newStudent);
+            return sr.update(newStudent);
         }
     }
 
 
     @Override
-    public void printAllStudents() throws SQLException {
-        List<Student> students = sr.getAllStudents();
+    public void printAll() throws SQLException {
+        List<Student> students = sr.getAll();
         System.out.printf("%-7s %-13s %-13s %-17s\n", "id", "first name", "last name", "national code");
         for (Student student : students) {
             System.out.printf("%-7s %-13s %-13s %-17s\n",
@@ -52,23 +52,15 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-    @Override
-    public Student generateStudent(String firstName, String lastName, String nationalCode) throws SQLException {
-        if (sr.getStudentByNationalCode(nationalCode) != null) {
-            throw new IllegalArgumentException("Student already exists");
-        } else {
-            return new Student(firstName, lastName, nationalCode);
-        }
-    }
 
     @Override
-    public Student getStudentByNationalCode(String nationalCode) throws SQLException {
-        return sr.getStudentByNationalCode(nationalCode);
+    public Student getByNationalCode(String nationalCode) throws SQLException {
+        return sr.getByNationalCode(nationalCode);
     }
 
     @Override
     public boolean signIn(int studentId, String nationalCode) throws SQLException {
-        Student student = sr.getStudentByIdAndNationalCode(studentId,nationalCode);
+        Student student = sr.getByIdAndNationalCode(studentId,nationalCode);
         if (student != null) {
             SecurityContext.student = student;
             return true;

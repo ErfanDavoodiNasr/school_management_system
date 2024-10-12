@@ -1,12 +1,10 @@
 package service.impl;
 
 import model.Course;
-import model.Exam;
 import repository.CourseRepository;
 import service.CourseService;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CourseServiceImpl implements CourseService {
@@ -16,41 +14,37 @@ public class CourseServiceImpl implements CourseService {
         this.cr = cr;
     }
     @Override
-    public Course addCourse(Course course) throws SQLException {
+    public Course save(Course course) throws SQLException {
         if (course == null) {
             throw new IllegalArgumentException("Course is null");
         }else{
-            return cr.addCourse(course);
+            return cr.save(course);
         }
     }
 
     @Override
-    public boolean updateCourse(String courseTitle, Course newCourse) throws SQLException {
-        if (cr.getCourse(courseTitle) == null || newCourse == null) {
+    public boolean update(String courseTitle, Course newCourse) throws SQLException {
+        if (cr.getByTitle(courseTitle) == null || newCourse == null) {
             throw new IllegalArgumentException("Course does not exist");
         }else{
-            return cr.updateCourse(newCourse);
+            return cr.update(newCourse);
         }
     }
 
     @Override
-    public boolean deleteCourse(String courseTitle) throws SQLException {
-        Course course = cr.getCourse(courseTitle);
+    public boolean remove(String courseTitle) throws SQLException {
+        Course course = cr.getByTitle(courseTitle);
         if (course == null) {
             throw new IllegalArgumentException("Course does not exist");
         }else{
-            return cr.deleteCourse(course);
+            return cr.remove(course);
         }
     }
 
-    @Override
-    public Course generateCourse(String courseTitle, int courseUnit) throws SQLException {
-        return new Course(courseTitle, courseUnit);
-    }
 
     @Override
-    public void printAllCourses() throws SQLException {
-        List<Course> courses = cr.getAllCourses();
+    public void printAll() throws SQLException {
+        List<Course> courses = cr.getAll();
         System.out.printf("%-7s %-15s %-7s\n", "id", "course title", "course unit");
         for (Course course : courses) {
             System.out.printf("%-7s %-15s %-7s\n",
@@ -61,8 +55,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCoursesByTitle(String courseTitle) throws SQLException {
-        Course course = cr.getCourse(courseTitle);
+    public Course getByTitle(String courseTitle) throws SQLException {
+        Course course = cr.getByTitle(courseTitle);
         if (course == null) {
             throw new IllegalArgumentException("Course does not exist");
         }else {

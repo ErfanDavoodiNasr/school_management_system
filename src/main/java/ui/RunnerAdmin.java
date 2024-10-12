@@ -139,7 +139,7 @@ public class RunnerAdmin {
             int year = Integer.parseInt(birthDate.substring(0, 4));
             int month = Integer.parseInt(birthDate.substring(5, 7));
             int day = Integer.parseInt(birthDate.substring(8, 10));
-            ApplicationContext.getStudentService().addStudent(new Student(
+            ApplicationContext.getStudentService().save(new Student(
                     firstName,
                     lastName,
                     LocalDate.of(year, month, day),
@@ -164,8 +164,8 @@ public class RunnerAdmin {
             int day = Integer.parseInt(examDate.substring(8, 10));
             int hour = Integer.parseInt(examTime.substring(0, 2));
             int minute = Integer.parseInt(examTime.substring(3, 5));
-            Course course = ApplicationContext.getCourseService().addCourse(new Course(courseTitle, courseUnit));
-            ApplicationContext.getExamService().addExam(new Exam(course.getCourseId(),
+            Course course = ApplicationContext.getCourseService().save(new Course(courseTitle, courseUnit));
+            ApplicationContext.getExamService().save(new Exam(course.getCourseId(),
                     courseTitle,
                     LocalDate.of(year,month,day),
                     LocalTime.of(hour,minute)
@@ -182,7 +182,7 @@ public class RunnerAdmin {
             String lastName = input("enter last name: ");
             String nationalCode = input("enter national code: ");
             int courseId = intInput("enter course id: ");
-            ApplicationContext.getTeacherService().addTeacher(new Teacher(firstName, lastName, nationalCode, courseId));
+            ApplicationContext.getTeacherService().save(new Teacher(firstName, lastName, nationalCode, courseId));
             println("Teacher added");
         } catch (Exception e) {
             println(e.getMessage());
@@ -192,7 +192,7 @@ public class RunnerAdmin {
     private static void removeStudent() {
         try {
             String nationalCode = input("enter national code: ");
-            ApplicationContext.getStudentService().removeStudent(nationalCode);
+            ApplicationContext.getStudentService().remove(nationalCode);
             println("Student removed");
         } catch (Exception e) {
             println(e.getMessage());
@@ -202,7 +202,7 @@ public class RunnerAdmin {
     private static void removeCourse() {
         try {
             String courseTitle = input("enter course title: ");
-            ApplicationContext.getCourseService().deleteCourse(courseTitle);
+            ApplicationContext.getCourseService().remove(courseTitle);
             println("Course removed");
         } catch (Exception e) {
             println(e.getMessage());
@@ -212,7 +212,7 @@ public class RunnerAdmin {
     private static void removeTeacher() {
         try {
             String nationalCode = input("enter national code: ");
-            ApplicationContext.getTeacherService().removeTeacher(nationalCode);
+            ApplicationContext.getTeacherService().remove(nationalCode);
             println("Teacher removed");
         } catch (Exception e) {
             println(e.getMessage());
@@ -222,13 +222,13 @@ public class RunnerAdmin {
     private static void updateStudents() {
         try {
             String nationalCode = input("enter national code: ");
-            if (ApplicationContext.getStudentService().getStudentByNationalCode(nationalCode) == null) {
+            if (ApplicationContext.getStudentService().getByNationalCode(nationalCode) == null) {
                 println("Student not found");
                 return;
             }
             String firstName = input("enter first name: ");
             String lastName = input("enter last name: ");
-            ApplicationContext.getStudentService().updateStudent(nationalCode, new Student(firstName, lastName, nationalCode));
+            ApplicationContext.getStudentService().update(nationalCode, new Student(firstName, lastName, nationalCode));
             println("Student updated");
         } catch (Exception e) {
             println(e.getMessage());
@@ -238,14 +238,14 @@ public class RunnerAdmin {
     private static void updateCourse() {
         try {
             String courseTitle = input("enter course title: ");
-            Course course = ApplicationContext.getCourseService().getCoursesByTitle(courseTitle);
+            Course course = ApplicationContext.getCourseService().getByTitle(courseTitle);
             if (course == null) {
                 println("Course not found");
                 return;
             }
             int courseUnit = intInput("enter course unit: ");
             String newCourseTitle = input("enter course title: ");
-            ApplicationContext.getCourseService().updateCourse(courseTitle, new Course(course.getCourseId(),newCourseTitle, courseUnit));
+            ApplicationContext.getCourseService().update(courseTitle, new Course(course.getCourseId(),newCourseTitle, courseUnit));
             println("Course updated");
         } catch (Exception e) {
             println(e.getMessage());
@@ -255,14 +255,14 @@ public class RunnerAdmin {
     private static void updateTeacher() {
         try {
             String nationalCode = input("enter national code: ");
-            if (ApplicationContext.getTeacherService().getTeacherByNationalCode(nationalCode) == null) {
+            if (ApplicationContext.getTeacherService().getByNationalCode(nationalCode) == null) {
                 println("Teacher not found");
                 return;
             }
             String firstName = input("enter first name: ");
             String lastName = input("enter last name: ");
             int courseId = intInput("enter courseId: ");
-            ApplicationContext.getTeacherService().updateTeacher(nationalCode, new Teacher(firstName, lastName, nationalCode,courseId));
+            ApplicationContext.getTeacherService().update(nationalCode, new Teacher(firstName, lastName, nationalCode,courseId));
             println("Teacher updated");
         } catch (Exception e) {
             println(e.getMessage());
@@ -271,7 +271,7 @@ public class RunnerAdmin {
 
     private static void listStudents() {
         try {
-            ApplicationContext.getStudentService().printAllStudents();
+            ApplicationContext.getStudentService().printAll();
         } catch (Exception e) {
             println(e.getMessage());
         }
@@ -279,7 +279,7 @@ public class RunnerAdmin {
 
     private static void listTeachers() {
         try {
-            ApplicationContext.getTeacherService().printAllTeachers();
+            ApplicationContext.getTeacherService().printAll();
         } catch (Exception e) {
             println(e.getMessage());
         }
@@ -287,7 +287,7 @@ public class RunnerAdmin {
 
     public static void listCourses() {
         try {
-            ApplicationContext.getCourseService().printAllCourses();
+            ApplicationContext.getCourseService().printAll();
         } catch (Exception e) {
             println(e.getMessage());
         }

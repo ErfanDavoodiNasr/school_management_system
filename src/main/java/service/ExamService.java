@@ -5,5 +5,5 @@ import model.Exam;
 import java.sql.SQLException;
 
 public interface ExamService {
-    boolean addExam(Exam exam) throws SQLException;
+    boolean save(Exam exam) throws SQLException;
 }

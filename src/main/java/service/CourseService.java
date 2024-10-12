@@ -1,16 +1,13 @@
 package service;
 
 import model.Course;
-import model.Exam;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public interface CourseService {
-    Course addCourse(Course course) throws SQLException;
-    boolean updateCourse(String courseTitle,Course newCourse) throws SQLException;
-    boolean deleteCourse(String courseTitle) throws SQLException;
-    Course generateCourse(String courseTitle,int courseUnit) throws SQLException;
-    void printAllCourses() throws SQLException;
-    Course getCoursesByTitle(String courseTitle) throws SQLException;
+    Course save(Course course) throws SQLException;
+    boolean update(String courseTitle, Course newCourse) throws SQLException;
+    boolean remove(String courseTitle) throws SQLException;
+    void printAll() throws SQLException;
+    Course getByTitle(String courseTitle) throws SQLException;
 }

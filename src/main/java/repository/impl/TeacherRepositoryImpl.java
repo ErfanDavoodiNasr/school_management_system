@@ -4,7 +4,6 @@ import model.Teacher;
 import repository.TeacherRepository;
 
 import static data.Database.getPreparedStatement;
-import static data.Database.getResultSet;
 import static data.DatabaseQuery.*;
 
 import java.sql.PreparedStatement;
@@ -16,7 +15,7 @@ import java.util.List;
 public class TeacherRepositoryImpl implements TeacherRepository {
 
     @Override
-    public boolean addTeacher(Teacher teacher) throws SQLException {
+    public boolean save(Teacher teacher) throws SQLException {
         PreparedStatement pst = getPreparedStatement(ADD_NEW_TEACHER);
         pst.setString(1, teacher.getFirst_name());
         pst.setString(2, teacher.getLast_name());
@@ -27,7 +26,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public boolean removeTeacher(Teacher teacher) throws SQLException {
+    public boolean remove(Teacher teacher) throws SQLException {
         PreparedStatement pst = getPreparedStatement(DELETE_TEACHER);
         pst.setInt(1, teacher.getId());
         pst.executeUpdate();
@@ -35,7 +34,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public boolean updateTeacher(Teacher teacher) throws SQLException {
+    public boolean update(Teacher teacher) throws SQLException {
         PreparedStatement pst = getPreparedStatement(UPDATE_TEACHER);
         pst.setString(1, teacher.getFirst_name());
         pst.setString(2, teacher.getLast_name());
@@ -45,7 +44,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public List<Teacher> getAllTeachers() throws SQLException {
+    public List<Teacher> getAll() throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_ALL_TEACHERS);
         ResultSet rs = pst.executeQuery();
         List<Teacher> teachers = new ArrayList<>();
@@ -61,7 +60,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public Teacher getTeacherNationalCode(String nationalCode) throws SQLException {
+    public Teacher getByNationalCode(String nationalCode) throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_TEACHER_BY_NATIONAL_CODE);
         pst.setString(1, nationalCode);
         ResultSet rs = pst.executeQuery();

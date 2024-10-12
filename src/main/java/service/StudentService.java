@@ -5,11 +5,10 @@ import model.Student;
 import java.sql.SQLException;
 
 public interface StudentService {
-    boolean addStudent(Student student) throws SQLException;
-    boolean removeStudent(String nationalCode) throws SQLException;
-    boolean updateStudent(String nationalCode, Student newStudent) throws SQLException;
-    void printAllStudents() throws SQLException;
-    Student generateStudent(String firstName, String lastName, String nationalCode) throws SQLException;
-    Student getStudentByNationalCode(String nationalCode) throws SQLException;
+    boolean save(Student student) throws SQLException;
+    boolean remove(String nationalCode) throws SQLException;
+    boolean update(String nationalCode, Student newStudent) throws SQLException;
+    void printAll() throws SQLException;
+    Student getByNationalCode(String nationalCode) throws SQLException;
     boolean signIn(int studentId, String nationalCode) throws SQLException;
 }

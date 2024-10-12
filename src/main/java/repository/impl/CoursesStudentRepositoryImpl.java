@@ -1,6 +1,5 @@
 package repository.impl;
 
-import model.Course;
 import model.dto.CourseDto;
 import repository.CoursesStudentRepository;
 import util.SecurityContext;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
     @Override
-    public boolean addCourse(int courseId, int studentId) throws SQLException {
+    public boolean save(int courseId, int studentId) throws SQLException {
         PreparedStatement pst = getPreparedStatement(ADD_COURSE_STUDENT);
         pst.setInt(1, courseId);
         pst.setInt(2, studentId);
@@ -38,7 +37,7 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
     }
 
     @Override
-    public boolean deleteCourse(int courseId, int studentId) throws SQLException {
+    public boolean remove(int courseId, int studentId) throws SQLException {
         PreparedStatement pst = getPreparedStatement(DELETE_COURSE_STUDENT);
         pst.setInt(1, studentId);
         pst.setInt(2, courseId);
@@ -56,7 +55,7 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
     }
 
     @Override
-    public List<CourseDto> getCourses() throws SQLException {
+    public List<CourseDto> getAllUserCourses() throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_USER_COURSES);
         pst.setInt(1, SecurityContext.student.getId());
         ResultSet rs = pst.executeQuery();
@@ -64,8 +63,8 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
     }
 
     @Override
-    public List<CourseDto> getAllCourses() throws SQLException {
-        PreparedStatement pst = getPreparedStatement(GET_ALL_USER_COURSES);
+    public List<CourseDto> getAll() throws SQLException {
+        PreparedStatement pst = getPreparedStatement(GET_ALL_USERS_COURSES);
         ResultSet rs = pst.executeQuery();
         return getCourseDtos(rs);
     }
