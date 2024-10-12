@@ -21,7 +21,7 @@ public class RunnerAdmin {
             println("2 - sign out");
             Integer input = intInput("choose a number: ");
             switch (input) {
-                case 1 -> signInAdmin();
+                case 1 -> signIn();
                 case 2 -> {
                     return;
                 }
@@ -30,7 +30,7 @@ public class RunnerAdmin {
         }
     }
 
-    private static void signInAdmin() {
+    private static void signIn() {
         try {
             int i = intInput("enter id: ");
             String input = input("enter national code: ");

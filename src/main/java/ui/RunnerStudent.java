@@ -19,10 +19,10 @@ public class RunnerStudent {
             println("3 - sign out");
             Integer input = intInput("choose a number: ");
             switch (input) {
-                case 1 -> signInStudent();
-                case 2 -> signUpStudent();
+                case 1 -> signIn();
+                case 2 -> signUp();
                 case 3 -> {
-                    signOutStudent();
+                    signOut();
                     return;
                 }
                 default -> println("choose a number between 1 and 3");
@@ -30,7 +30,7 @@ public class RunnerStudent {
         }
     }
 
-    private static void signUpStudent() {
+    private static void signUp() {
         try {
             String firstName = input("enter first name: ");
             String lastName = input("enter last name: ");
@@ -68,12 +68,12 @@ public class RunnerStudent {
             println("5 - exit");
             int input = intInput("choose a number: ");
             switch (input) {
-                case 1 -> addCourseStudent();
-                case 2 -> removeCourseStudent();
+                case 1 -> addCourse();
+                case 2 -> removeCourse();
                 case 3 -> showMyCourses();
-                case 4 -> showAllCoursesStudent();
+                case 4 -> showAllCourses();
                 case 5 -> {
-                    signOutStudent();
+                    signOut();
                     return;
                 }
                 default -> println("choose a number between 1 and 5");
@@ -82,7 +82,7 @@ public class RunnerStudent {
         }
     }
 
-    private static void showAllCoursesStudent() {
+    private static void showAllCourses() {
         try {
             List<CourseDto> courses = ApplicationContext.getCoursesStudentService().getAll();
             System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", "title", "credit", "teacher", "date", "time");
@@ -111,7 +111,7 @@ public class RunnerStudent {
         }
     }
 
-    private static void removeCourseStudent() {
+    private static void removeCourse() {
         try {
             String input = input("enter course title: ");
             if (ApplicationContext.getCoursesStudentService().remove(input)) {
@@ -124,7 +124,7 @@ public class RunnerStudent {
         }
     }
 
-    private static void addCourseStudent() {
+    private static void addCourse() {
         try {
             String input = input("enter course title: ");
             if (ApplicationContext.getCoursesStudentService().save(input)) {
@@ -137,7 +137,7 @@ public class RunnerStudent {
         }
     }
 
-    private static void signOutStudent() {
+    private static void signOut() {
         if (SecurityContext.student == null) {
             println("you have not signed in");
         } else {
@@ -146,7 +146,7 @@ public class RunnerStudent {
         }
     }
 
-    public static void signInStudent() {
+    public static void signIn() {
         try {
             int i = intInput("enter student id: ");
             String input = input("enter national code: ");
