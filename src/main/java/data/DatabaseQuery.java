@@ -24,6 +24,9 @@ public class DatabaseQuery {
     public static final String UPDATE_TEACHER = "UPDATE teachers SET first_name = ?, last_name = ?, course_id = ? WHERE national_code = ?";
     public static final String GET_TEACHER_BY_ID_NATIONAL_CODE = "select * from teachers where teacher_id = ? and national_code = ?";
     public static final String SHOW_TEACHER_STUDENTS = "select s.student_id, concat(s.first_name , ' ' , s.last_name) as full_name, s.national_code, cs.avg_score from teachers t join courses_students cs on t.course_id = cs.course_id join students s on cs.student_id = s.student_id where t.teacher_id = ?";
+    public static final String AVG_SCORE_STUDENT = "Update students\n" +
+            "SET avg_score = (select avg(avg_score) from courses_students where courses_students.student_id = ?)\n" +
+            "where student_id = ?";
     // course
     public static final String GET_ALL_COURSES = "SELECT * FROM courses";
     public static final String ADD_NEW_COURSE = "INSERT INTO courses (course_title, course_unit) VALUES (?, ?)";
