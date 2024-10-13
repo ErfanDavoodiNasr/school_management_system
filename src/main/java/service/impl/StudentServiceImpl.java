@@ -49,13 +49,16 @@ public class StudentServiceImpl implements StudentService {
     public void printAll() throws SQLException {
         Optional<List<Student>> students = sr.getAll();
         if (students.isPresent()) {
-        System.out.printf("%-7s %-13s %-13s %-17s\n", "id", "first name", "last name", "national code");
+        System.out.printf("%-7s %-13s %-13s %-17s %-7s\n", "id", "first name", "last name", "national code", "avg score");
         for (Student student : students.get()) {
-            System.out.printf("%-7s %-13s %-13s %-17s\n",
+            System.out.printf("%-7s %-13s %-13s %-17s %-7s\n",
                     student.getId(),
                     student.getFirst_name(),
                     student.getLast_name(),
-                    student.getNationalCode());
+                    student.getNationalCode(),
+                    student.getAverageScore()
+                    );
+
         }
         }else {
             throw new IllegalArgumentException("No students found");

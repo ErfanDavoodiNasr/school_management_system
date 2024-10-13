@@ -43,6 +43,11 @@ public class Student extends Person {
         this.entryDate = entryDate;
     }
 
+    public Student(int studentId, String firstName, String lastName, String nationalCode, double avgScore) {
+        super(studentId,firstName,lastName,nationalCode);
+        this.averageScore = avgScore;
+    }
+
     public LocalDate getEntryDate() {
         return entryDate;
     }

@@ -110,9 +110,9 @@ public class RunnerStudent {
                 println("there is no courses");
                 return;
             }
-            System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", "title", "credit", "teacher", "date", "time");
+            System.out.printf("%-13s %-5s %-20s %-13s %-13s %-7s\n", "title", "credit", "teacher", "date", "time", "avg score");
             for (CourseDto course : courses.get()) {
-                System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", course.getCourseTitle(), course.getCourseUnit(), course.getTeacherName(), course.getExamDate(), course.getExamTime());
+                System.out.printf("%-13s %-5s %-20s %-13s %-13s %-7s\n", course.getCourseTitle(), course.getCourseUnit(), course.getTeacherName(), course.getExamDate(), course.getExamTime() , course.getAvgScore());
             }
             println("");
         } catch (Exception e) {

@@ -23,7 +23,7 @@ public class DatabaseQuery {
     public static final String GET_ALL_TEACHERS = "SELECT * FROM teachers order by last_name,first_name,teacher_id";
     public static final String UPDATE_TEACHER = "UPDATE teachers SET first_name = ?, last_name = ?, course_id = ? WHERE national_code = ?";
     public static final String GET_TEACHER_BY_ID_NATIONAL_CODE = "select * from teachers where teacher_id = ? and national_code = ?";
-    public static final String SHOW_TEACHER_STUDENTS = "select s.student_id, concat(s.first_name , ' ' , s.last_name) as full_name, s.national_code, cs.avg_score from teachers t join courses_students cs on t.course_id = cs.course_id join students s on cs.student_id = s.student_id where t.teacher_id = ?";
+    public static final String SHOW_TEACHER_STUDENTS = "select s.student_id, concat(s.first_name , ' ' , s.last_name) as full_name, s.national_code, cs.avg_score as score, s.avg_score as avg_score from teachers t join courses_students cs on t.course_id = cs.course_id join students s on cs.student_id = s.student_id where t.teacher_id = ?";
     public static final String AVG_SCORE_STUDENT = "Update students\n" +
             "SET avg_score = (select avg(avg_score) from courses_students where courses_students.student_id = ?)\n" +
             "where student_id = ?";
@@ -33,7 +33,7 @@ public class DatabaseQuery {
     public static final String DELETE_COURSE = "DELETE FROM courses WHERE course_id = ?";
     public static final String GET_COURSE_BY_COURSE_TITLE = "SELECT * FROM courses WHERE course_title = ?";
     public static final String UPDATE_COURSE = "UPDATE courses SET course_title = ?, course_unit = ? WHERE course_id = ?";
-    public static final String GET_USER_COURSES = "select c.course_title, c.course_unit, concat(t.first_name, ' ', t.last_name) as teacherName, e.exam_date, e.exam_time from courses c join courses_students cs on c.course_id = cs.course_id join teachers t on c.course_id = t.course_id join public.exams e on c.course_id = e.course_id where student_id = ?";
+    public static final String GET_USER_COURSES = "select c.course_title, c.course_unit, concat(t.first_name, ' ', t.last_name) as teacherName, e.exam_date, e.exam_time, cs.avg_score from courses c join courses_students cs on c.course_id = cs.course_id join teachers t on c.course_id = t.course_id join public.exams e on c.course_id = e.course_id where student_id = ?";
     public static final String GET_ALL_USERS_COURSES = "select c.course_title, c.course_unit, concat(t.first_name, ' ', t.last_name) as teacherName, e.exam_date, e.exam_time from courses c join teachers t on c.course_id = t.course_id join public.exams e on c.course_id = e.course_id";
     // exam
     public static final String ADD_NEW_EXAM = "INSERT INTO exams (course_id, exam_title, exam_date, exam_time) VALUES (?, ?, ?, ?)";

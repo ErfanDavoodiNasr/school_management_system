@@ -58,7 +58,8 @@ public class StudentRepositoryImpl implements StudentRepository {
                     rs.getInt("student_id"),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
-                    rs.getString("national_code")
+                    rs.getString("national_code"),
+                    rs.getDouble("avg_score")
             ));
         }
         return Optional.of(students);
@@ -84,7 +85,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Optional<Student> getByIdAndNationalCode(int id, String nationalCode) throws SQLException {
-        PreparedStatement pst = getPreparedStatement(GET_TEACHER_BY_ID_NATIONAL_CODE);
+        PreparedStatement pst = getPreparedStatement(GET_STUDENT_BY_ID_NATIONAL_CODE);
         pst.setInt(1, id);
         pst.setString(2, nationalCode);
         ResultSet rs = pst.executeQuery();

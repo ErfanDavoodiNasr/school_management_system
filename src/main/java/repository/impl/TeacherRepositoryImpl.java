@@ -91,7 +91,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
                     rs.getInt("student_id"),
                     rs.getString("full_name"),
                     rs.getString("national_code"),
-                    rs.getDouble("avg_score")
+                    rs.getDouble("avg_score"),
+                    rs.getDouble("score")
             ));
         }
         return Optional.of(students);

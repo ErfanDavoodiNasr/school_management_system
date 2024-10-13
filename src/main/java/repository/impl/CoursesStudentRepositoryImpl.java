@@ -60,17 +60,25 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
         PreparedStatement pst = getPreparedStatement(GET_USER_COURSES);
         pst.setInt(1, SecurityContext.student.getId());
         ResultSet rs = pst.executeQuery();
-        return getCourseDtos(rs);
+        List<CourseDto> courses = new ArrayList<>();
+        while (rs.next()) {
+            courses.add(new CourseDto(
+                            rs.getString("course_title"),
+                            rs.getInt("course_unit"),
+                            rs.getString("teachername"),
+                            rs.getDate("exam_date").toLocalDate(),
+                            rs.getTime("exam_time").toLocalTime(),
+                            rs.getDouble("avg_score")
+                    )
+            );
+        }
+        return Optional.of(courses);
     }
 
     @Override
     public Optional<List<CourseDto>> getAll() throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_ALL_USERS_COURSES);
         ResultSet rs = pst.executeQuery();
-        return getCourseDtos(rs);
-    }
-
-    static Optional<List<CourseDto>> getCourseDtos(ResultSet rs) throws SQLException {
         List<CourseDto> courses = new ArrayList<>();
         while (rs.next()) {
             courses.add(new CourseDto(
@@ -82,6 +90,10 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
                     )
             );
         }
-        return Optional.of(courses);
+        if (courses.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(courses);
+        }
     }
 }

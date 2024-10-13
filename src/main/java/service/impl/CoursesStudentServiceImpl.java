@@ -48,9 +48,10 @@ public class CoursesStudentServiceImpl implements CoursesStudentService {
 
     @Override
     public Optional<List<CourseDto>> getAll() throws SQLException {
-        if (csr.getAll().isEmpty()){
+        Optional<List<CourseDto>> optionalCourseDtos = csr.getAll();
+        if (optionalCourseDtos.isEmpty()){
             throw new SQLException("Course not found");
         }
-        return csr.getAll();
+        return optionalCourseDtos;
     }
 }

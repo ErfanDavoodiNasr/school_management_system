@@ -10,13 +10,30 @@ public class CourseDto {
     private String teacherName;
     private LocalDate examDate;
     private LocalTime examTime;
+    private double avgScore;
 
-    public CourseDto(String courseTitle, int courseUnit, String teacherName, LocalDate examDate, LocalTime examTime) {
-        CourseTitle = courseTitle;
+    public CourseDto(String courseTitle, int courseUnit, String teacherName, LocalDate examDate, LocalTime examTime, double avgScore) {
+        this.CourseTitle = courseTitle;
         this.courseUnit = courseUnit;
         this.teacherName = teacherName;
         this.examDate = examDate;
         this.examTime = examTime;
+        this.avgScore = avgScore;
+    }
+    public CourseDto(String courseTitle, int courseUnit, String teacherName, LocalDate examDate, LocalTime examTime){
+        this.CourseTitle = courseTitle;
+        this.courseUnit = courseUnit;
+        this.teacherName = teacherName;
+        this.examDate = examDate;
+        this.examTime = examTime;
+    }
+
+    public double getAvgScore() {
+        return avgScore;
+    }
+
+    public void setAvgScore(double avgScore) {
+        this.avgScore = avgScore;
     }
 
     public String getCourseTitle() {

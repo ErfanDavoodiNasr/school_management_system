@@ -77,10 +77,10 @@ public class TeacherServiceImpl implements TeacherService {
     public void printAllStudents() throws SQLException {
         Optional<List<TeacherStudentDto>> students = tr.getAllStudents();
         if (students.isPresent()) {
-            System.out.printf("%-5s %-20s %-14s %-5s\n", "id", "full name", "national code", "avg score");
+            System.out.printf("%-5s %-20s %-14s %-7s %-7s\n", "id", "full name", "national code", "score", "avg score");
             for (TeacherStudentDto student : students.get()) {
-                System.out.printf("%-5s %-20s %-14s %-5s\n", student.getStudentId(), student.getFullName()
-                        , student.getNationalCode(), student.getAvgScore());
+                System.out.printf("%-5s %-20s %-14s %-7s %-7s\n", student.getStudentId(), student.getFullName()
+                        , student.getNationalCode(), student.getScore(), student.getAvgScore());
             }
         } else {
             throw new IllegalArgumentException("Student list is empty");

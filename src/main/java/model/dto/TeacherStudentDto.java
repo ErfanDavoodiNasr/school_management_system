@@ -7,12 +7,22 @@ public class TeacherStudentDto {
     private String fullName;
     private String nationalCode;
     private double avgScore;
+    private double score;
 
-    public TeacherStudentDto(int studentId, String fullName, String nationalCode, double avgScore) {
+    public TeacherStudentDto(int studentId, String fullName, String nationalCode, double avgScore, double score) {
         this.studentId = studentId;
         this.fullName = fullName;
         this.nationalCode = nationalCode;
         this.avgScore = avgScore;
+        this.score = score;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     public int getStudentId() {
