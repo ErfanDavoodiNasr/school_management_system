@@ -1,6 +1,5 @@
 package repository.impl;
 
-import model.Student;
 import model.Teacher;
 import model.dto.TeacherStudentDto;
 import repository.TeacherRepository;
@@ -14,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TeacherRepositoryImpl implements TeacherRepository {
 
@@ -47,7 +47,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public List<Teacher> getAll() throws SQLException {
+    public Optional<List<Teacher>> getAll() throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_ALL_TEACHERS);
         ResultSet rs = pst.executeQuery();
         List<Teacher> teachers = new ArrayList<>();
@@ -59,27 +59,29 @@ public class TeacherRepositoryImpl implements TeacherRepository {
                     rs.getString("national_code")
             ));
         }
-        return teachers;
+        return Optional.of(teachers);
     }
 
     @Override
-    public Teacher getByNationalCode(String nationalCode) throws SQLException {
+    public Optional<Teacher> getByNationalCode(String nationalCode) throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_TEACHER_BY_NATIONAL_CODE);
         pst.setString(1, nationalCode);
         ResultSet rs = pst.executeQuery();
+        Optional<Teacher> optionalTeacher = Optional.empty();
         if (rs.next()) {
-            return new Teacher(
+            Teacher teacher = new Teacher(
                     rs.getInt("teacher_id"),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
                     rs.getString("national_code")
             );
+            optionalTeacher = Optional.of(teacher);
         }
-        return null;
+        return optionalTeacher;
     }
 
     @Override
-    public List<TeacherStudentDto> getAllStudents() throws SQLException {
+    public Optional<List<TeacherStudentDto>> getAllStudents() throws SQLException {
         PreparedStatement pst = getPreparedStatement(SHOW_TEACHER_STUDENTS);
         pst.setInt(1, SecurityContext.teacher.getId());
         ResultSet rs = pst.executeQuery();
@@ -92,17 +94,18 @@ public class TeacherRepositoryImpl implements TeacherRepository {
                     rs.getDouble("avg_score")
             ));
         }
-        return students;
+        return Optional.of(students);
     }
 
     @Override
-    public Teacher getByIdAndNationalCode(int id, String nationalCode) throws SQLException {
+    public Optional<Teacher> getByIdAndNationalCode(int id, String nationalCode) throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_TEACHER_BY_ID_NATIONAL_CODE);
         pst.setInt(1, id);
         pst.setString(2, nationalCode);
         ResultSet rs = pst.executeQuery();
+        Optional<Teacher> optionalTeacher = Optional.empty();
         if (rs.next()) {
-            return new Teacher(
+            Teacher teacher = new Teacher(
                     rs.getInt("teacher_id"),
                     rs.getInt("course_id"),
                     rs.getString("first_name"),
@@ -112,8 +115,9 @@ public class TeacherRepositoryImpl implements TeacherRepository {
                     rs.getString("phone_number"),
                     rs.getDate("entry_date").toLocalDate()
             );
+            optionalTeacher = Optional.of(teacher);
         }
-        return null;
+        return optionalTeacher;
     }
 
     @Override

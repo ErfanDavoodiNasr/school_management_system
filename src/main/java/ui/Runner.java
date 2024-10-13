@@ -1,7 +1,6 @@
 package ui;
 
 import static ui.RunnerAdmin.adminMenu;
-import static ui.RunnerAdmin.teacher;
 import static ui.RunnerStudent.studentMenu;
 import static ui.RunnerTeacher.teacherMenu;
 import static util.Help.*;

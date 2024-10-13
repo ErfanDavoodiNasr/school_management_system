@@ -6,6 +6,7 @@ import service.CourseService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class CourseServiceImpl implements CourseService {
     private CourseRepository cr;
@@ -24,7 +25,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean update(String courseTitle, Course newCourse) throws SQLException {
-        if (cr.getByTitle(courseTitle) == null || newCourse == null) {
+        if (cr.getByTitle(courseTitle).isEmpty() || newCourse == null) {
             throw new IllegalArgumentException("Course does not exist");
         }else{
             return cr.update(newCourse);
@@ -33,20 +34,23 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean remove(String courseTitle) throws SQLException {
-        Course course = cr.getByTitle(courseTitle);
-        if (course == null) {
+        Optional<Course> course = cr.getByTitle(courseTitle);
+        if (course.isEmpty()) {
             throw new IllegalArgumentException("Course does not exist");
         }else{
-            return cr.remove(course);
+            return cr.remove(course.get());
         }
     }
 
 
     @Override
     public void printAll() throws SQLException {
-        List<Course> courses = cr.getAll();
+        Optional<List<Course>> courses = cr.getAll();
+        if (courses.isEmpty()) {
+            throw new IllegalArgumentException("Course list is empty");
+        }
         System.out.printf("%-7s %-15s %-7s\n", "id", "course title", "course unit");
-        for (Course course : courses) {
+        for (Course course : courses.get()) {
             System.out.printf("%-7s %-15s %-7s\n",
                     course.getCourseId(),
                     course.getCourseTitle(),
@@ -55,9 +59,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getByTitle(String courseTitle) throws SQLException {
-        Course course = cr.getByTitle(courseTitle);
-        if (course == null) {
+    public Optional<Course> getByTitle(String courseTitle) throws SQLException {
+        Optional<Course> course = cr.getByTitle(courseTitle);
+        if (course.isEmpty()) {
             throw new IllegalArgumentException("Course does not exist");
         }else {
             return course;

@@ -1,15 +1,14 @@
 package repository.impl;
 
 import model.Course;
-import model.dto.CourseDto;
 import repository.CourseRepository;
 import static data.Database.*;
 import static data.DatabaseQuery.*;
-import static repository.impl.CoursesStudentRepositoryImpl.getCourseDtos;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class CourseRepositoryImpl implements CourseRepository {
@@ -42,7 +41,7 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public List<Course> getAll() throws SQLException {
+    public Optional<List<Course>> getAll() throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_ALL_COURSES);
         ResultSet rs = pst.executeQuery();
         List<Course> courses = new ArrayList<>();
@@ -52,19 +51,21 @@ public class CourseRepositoryImpl implements CourseRepository {
                     rs.getString("course_title"),
                     rs.getInt("course_unit")));
         }
-        return courses;
+        return Optional.of(courses);
     }
 
     @Override
-    public Course getByTitle(String courseTitle) throws SQLException {
+    public Optional<Course> getByTitle(String courseTitle) throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_COURSE_BY_COURSE_TITLE);
         pst.setString(1, courseTitle);
         ResultSet rs = pst.executeQuery();
+        Optional<Course> optionalCourse = Optional.empty();
         if (rs.next()) {
-            return new Course(rs.getInt("course_id"),
+            Course course =  new Course(rs.getInt("course_id"),
                     rs.getString("course_title"),
                     rs.getInt("course_unit"));
+            optionalCourse = Optional.of(course);
         }
-        return null;
+        return optionalCourse;
     }
 }

@@ -7,6 +7,7 @@ import util.SecurityContext;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static util.Help.*;
 
@@ -84,9 +85,13 @@ public class RunnerStudent {
 
     private static void showAllCourses() {
         try {
-            List<CourseDto> courses = ApplicationContext.getCoursesStudentService().getAll();
+            Optional<List<CourseDto>> courses = ApplicationContext.getCoursesStudentService().getAll();
+            if (courses.isEmpty()){
+                println("there is no courses");
+                return;
+            }
             System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", "title", "credit", "teacher", "date", "time");
-            for (CourseDto course : courses) {
+            for (CourseDto course : courses.get()) {
                 System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", course.getCourseTitle(), course.getCourseUnit(), course.getTeacherName(), course.getExamDate(), course.getExamTime());
             }
             println("");
@@ -100,9 +105,13 @@ public class RunnerStudent {
 
     public static void showMyCourses() {
         try {
-            List<CourseDto> courses = ApplicationContext.getCoursesStudentService().getAllUserCourses();
+            Optional<List<CourseDto>> courses = ApplicationContext.getCoursesStudentService().getAllUserCourses();
+            if (courses.isEmpty()){
+                println("there is no courses");
+                return;
+            }
             System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", "title", "credit", "teacher", "date", "time");
-            for (CourseDto course : courses) {
+            for (CourseDto course : courses.get()) {
                 System.out.printf("%-13s %-5s %-20s %-13s %-13s\n", course.getCourseTitle(), course.getCourseUnit(), course.getTeacherName(), course.getExamDate(), course.getExamTime());
             }
             println("");

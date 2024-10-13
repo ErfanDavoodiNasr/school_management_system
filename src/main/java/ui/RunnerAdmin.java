@@ -8,6 +8,7 @@ import util.ApplicationContext;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 import static util.Help.*;
 import static util.Help.println;
@@ -165,7 +166,7 @@ public class RunnerAdmin {
             int hour = Integer.parseInt(examTime.substring(0, 2));
             int minute = Integer.parseInt(examTime.substring(3, 5));
             ApplicationContext.getCourseService().save(new Course(courseTitle, courseUnit));
-            ApplicationContext.getExamService().save(new Exam(ApplicationContext.getCourseService().getByTitle(courseTitle).getCourseId(),
+            ApplicationContext.getExamService().save(new Exam(ApplicationContext.getCourseService().getByTitle(courseTitle).get().getCourseId(),
                     courseTitle,
                     LocalDate.of(year,month,day),
                     LocalTime.of(hour,minute)
@@ -238,14 +239,14 @@ public class RunnerAdmin {
     private static void updateCourse() {
         try {
             String courseTitle = input("enter course title: ");
-            Course course = ApplicationContext.getCourseService().getByTitle(courseTitle);
-            if (course == null) {
+            Optional<Course> course = ApplicationContext.getCourseService().getByTitle(courseTitle);
+            if (course.isEmpty()) {
                 println("Course not found");
                 return;
             }
             int courseUnit = intInput("enter course unit: ");
             String newCourseTitle = input("enter course title: ");
-            ApplicationContext.getCourseService().update(courseTitle, new Course(course.getCourseId(),newCourseTitle, courseUnit));
+            ApplicationContext.getCourseService().update(courseTitle, new Course(course.get().getCourseId(),newCourseTitle, courseUnit));
             println("Course updated");
         } catch (Exception e) {
             println(e.getMessage());
@@ -255,7 +256,7 @@ public class RunnerAdmin {
     private static void updateTeacher() {
         try {
             String nationalCode = input("enter national code: ");
-            if (ApplicationContext.getTeacherService().getByNationalCode(nationalCode) == null) {
+            if (ApplicationContext.getTeacherService().getByNationalCode(nationalCode).isEmpty()) {
                 println("Teacher not found");
                 return;
             }

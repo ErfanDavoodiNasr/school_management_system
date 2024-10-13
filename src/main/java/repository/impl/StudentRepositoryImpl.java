@@ -1,18 +1,16 @@
 package repository.impl;
 
 import model.Student;
-import model.Teacher;
 import repository.StudentRepository;
-
 import static data.Database.*;
 import static data.DatabaseQuery.*;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class StudentRepositoryImpl implements StudentRepository {
     @Override
@@ -51,7 +49,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public List<Student> getAll() throws SQLException {
+    public Optional<List<Student>> getAll() throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_ALL_STUDENTS);
         ResultSet rs = pst.executeQuery();
         List<Student> students = new ArrayList<>();
@@ -63,33 +61,36 @@ public class StudentRepositoryImpl implements StudentRepository {
                     rs.getString("national_code")
             ));
         }
-        return students;
+        return Optional.of(students);
     }
 
     @Override
-    public Student getByNationalCode(String nationalCode) throws SQLException {
+    public Optional<Student> getByNationalCode(String nationalCode) throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_STUDENT_BY_NATIONAL_CODE);
         pst.setString(1, nationalCode);
         ResultSet rs = pst.executeQuery();
+        Optional<Student> optionalStudent = Optional.empty();
         if (rs.next()) {
-            return new Student(
+            Student student =  new Student(
                     rs.getInt("student_id"),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
                     rs.getString("national_code")
             );
+            optionalStudent = Optional.of(student);
         }
-        return null;
+        return optionalStudent;
     }
 
     @Override
-    public Student getByIdAndNationalCode(int id, String nationalCode) throws SQLException {
+    public Optional<Student> getByIdAndNationalCode(int id, String nationalCode) throws SQLException {
         PreparedStatement pst = getPreparedStatement(GET_TEACHER_BY_ID_NATIONAL_CODE);
         pst.setInt(1, id);
         pst.setString(2, nationalCode);
         ResultSet rs = pst.executeQuery();
+        Optional<Student> optionalStudent = Optional.empty();
         if (rs.next()) {
-            return new Student(
+            Student student =  new Student(
                     rs.getInt("student_id"),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
@@ -98,7 +99,8 @@ public class StudentRepositoryImpl implements StudentRepository {
                     rs.getString("phone_number"),
                     rs.getDate("entry_date").toLocalDate()
             );
+            optionalStudent = Optional.of(student);
         }
-        return null;
+        return optionalStudent;
     }
 }

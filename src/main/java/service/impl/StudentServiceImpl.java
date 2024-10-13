@@ -7,9 +7,10 @@ import util.SecurityContext;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class StudentServiceImpl implements StudentService {
-    private StudentRepository sr;
+    private final StudentRepository sr;
 
     public StudentServiceImpl(StudentRepository sr) {
         this.sr = sr;
@@ -26,7 +27,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean remove(String nationalCode) throws SQLException {
-        return sr.remove(sr.getByNationalCode(nationalCode));
+        Optional<Student> optionalStudent = Optional.empty();
+        optionalStudent = sr.getByNationalCode(nationalCode);
+        if (optionalStudent.isPresent()) {
+            return sr.remove(optionalStudent.get());
+        }
+        return false;
     }
 
     @Override
@@ -41,28 +47,32 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void printAll() throws SQLException {
-        List<Student> students = sr.getAll();
+        Optional<List<Student>> students = sr.getAll();
+        if (students.isPresent()) {
         System.out.printf("%-7s %-13s %-13s %-17s\n", "id", "first name", "last name", "national code");
-        for (Student student : students) {
+        for (Student student : students.get()) {
             System.out.printf("%-7s %-13s %-13s %-17s\n",
                     student.getId(),
                     student.getFirst_name(),
                     student.getLast_name(),
                     student.getNationalCode());
         }
+        }else {
+            throw new IllegalArgumentException("No students found");
+        }
     }
 
 
     @Override
-    public Student getByNationalCode(String nationalCode) throws SQLException {
+    public Optional<Student> getByNationalCode(String nationalCode) throws SQLException {
         return sr.getByNationalCode(nationalCode);
     }
 
     @Override
     public boolean signIn(int studentId, String nationalCode) throws SQLException {
-        Student student = sr.getByIdAndNationalCode(studentId,nationalCode);
-        if (student != null) {
-            SecurityContext.student = student;
+        Optional<Student> student = sr.getByIdAndNationalCode(studentId,nationalCode);
+        if (student.isPresent()) {
+            SecurityContext.student = student.get();
             return true;
         }
         return false;

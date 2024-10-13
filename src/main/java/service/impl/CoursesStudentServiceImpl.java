@@ -9,6 +9,7 @@ import util.SecurityContext;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class CoursesStudentServiceImpl implements CoursesStudentService {
     private final CoursesStudentRepository csr;
@@ -21,34 +22,34 @@ public class CoursesStudentServiceImpl implements CoursesStudentService {
 
     @Override
     public boolean save(String courseTitle) throws SQLException {
-        Course course = cr.getByTitle(courseTitle);
-        if (course == null) {
+        Optional<Course> course = cr.getByTitle(courseTitle);
+        if (course.isEmpty()) {
             throw new SQLException("Course not found");
         }
-        return csr.save(course.getCourseId(), SecurityContext.student.getId());
+        return csr.save(course.get().getCourseId(), SecurityContext.student.getId());
     }
 
     @Override
     public boolean remove(String courseTitle) throws SQLException {
-        Course course = cr.getByTitle(courseTitle);
-        if (course == null) {
+        Optional<Course> course = cr.getByTitle(courseTitle);
+        if (course.isEmpty()) {
             throw new SQLException("Course not found");
         }
-        return csr.remove(course.getCourseId(), SecurityContext.student.getId());
+        return csr.remove(course.get().getCourseId(), SecurityContext.student.getId());
     }
 
     @Override
-    public List<CourseDto> getAllUserCourses() throws SQLException {
-        if (csr.getAllUserCourses() == null){
-            return null;
+    public Optional<List<CourseDto>> getAllUserCourses() throws SQLException {
+        if (csr.getAllUserCourses().isEmpty()){
+            throw new SQLException("Course not found");
         }
         return csr.getAllUserCourses();
     }
 
     @Override
-    public List<CourseDto> getAll() throws SQLException {
-        if (csr.getAll() == null){
-            return null;
+    public Optional<List<CourseDto>> getAll() throws SQLException {
+        if (csr.getAll().isEmpty()){
+            throw new SQLException("Course not found");
         }
         return csr.getAll();
     }

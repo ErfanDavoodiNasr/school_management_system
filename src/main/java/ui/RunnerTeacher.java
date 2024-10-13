@@ -4,6 +4,8 @@ import model.Teacher;
 import util.ApplicationContext;
 import util.SecurityContext;
 
+import java.util.Optional;
+
 import static util.Help.*;
 
 public class RunnerTeacher {
@@ -51,13 +53,18 @@ public class RunnerTeacher {
 
     private static void showMyInformation() {
         try {
-            Teacher teacher = ApplicationContext.getTeacherService().getByNationalCode(SecurityContext.teacher.getNationalCode());
+            Optional<Teacher> optionalTeacher = ApplicationContext.getTeacherService().getByNationalCode(SecurityContext.teacher.getNationalCode());
+            if (optionalTeacher.isPresent()) {
+                Teacher teacher = optionalTeacher.get();
             System.out.printf("%-7s %-13s %-13s %-17s\n", "id", "first name", "last name", "national code");
             System.out.printf("%-7s %-13s %-13s %-17s\n",
                     teacher.getId(),
                     teacher.getFirst_name(),
                     teacher.getLast_name(),
                     teacher.getNationalCode());
+            }else{
+                println("No teacher found");
+            }
         } catch (Exception e) {
             println(e.getMessage());
         }
