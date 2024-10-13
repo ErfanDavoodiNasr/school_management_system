@@ -12,5 +12,5 @@ public interface TeacherService {
     Teacher getByNationalCode(String nationalCode) throws SQLException;
     void printAllStudents() throws SQLException;
     boolean signIn(int teacherId, String nationalCode) throws SQLException;
-    boolean grading(String nationalCodeStudent, double avgScore) throws SQLException;
+    boolean grading(String nationalCodeStudent, int courseId , double avgScore) throws SQLException;
 }

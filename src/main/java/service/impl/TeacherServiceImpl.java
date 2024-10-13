@@ -82,13 +82,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public boolean grading(String nationalCodeStudent, double avgScore) throws SQLException {
+    public boolean grading(String nationalCodeStudent, int courseId , double avgScore) throws SQLException {
         Student student = sr.getByNationalCode(nationalCodeStudent);
         if (student == null) {
             throw new IllegalArgumentException("Student does not exist");
         } else if (avgScore > 20.0 || avgScore < 0.0) {
             throw new IllegalArgumentException("Avg score cannot be more than 20.0 or less than 0.0");
         }
-        return tr.grading(nationalCodeStudent,avgScore);
+        return tr.grading(student.getId(), courseId , avgScore);
     }
 }

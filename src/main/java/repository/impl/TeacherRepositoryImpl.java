@@ -104,6 +104,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         if (rs.next()) {
             return new Teacher(
                     rs.getInt("teacher_id"),
+                    rs.getInt("course_id"),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
                     rs.getDate("birth_date").toLocalDate(),
@@ -116,10 +117,11 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public boolean grading(String nationalCodeStudent, double avgScore) throws SQLException {
+    public boolean grading(int studentId, int courseId , double avgScore) throws SQLException {
         PreparedStatement pst = getPreparedStatement(GRADING_TO_STUDENT);
-        pst.setDouble(1,avgScore);
-        pst.setString(2, nationalCodeStudent);
+        pst.setDouble(1, avgScore);
+        pst.setInt(2, studentId);
+        pst.setInt(3, courseId);
         return pst.executeUpdate() > 0;
     }
 }

@@ -26,5 +26,5 @@ public interface TeacherRepository extends BaseRepository<Teacher> {
 
     Teacher getByIdAndNationalCode(int id, String nationalCode) throws SQLException;
 
-    boolean grading(String nationalCodeStudent, double avgScore) throws SQLException;
+    boolean grading(int studentId, int courseId , double avgScore) throws SQLException;
 }

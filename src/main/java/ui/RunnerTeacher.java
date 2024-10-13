@@ -80,7 +80,7 @@ public class RunnerTeacher {
         try {
             String nationalCodeStudent = input("enter national code student: ");
             Double avgScore = doubleInput("enter avg score: ");
-            ApplicationContext.getTeacherService().grading(nationalCodeStudent, avgScore);
+            ApplicationContext.getTeacherService().grading(nationalCodeStudent, SecurityContext.teacher.getCourseId(), avgScore);
         } catch (Exception e) {
             println(e.getMessage());
         }

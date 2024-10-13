@@ -23,6 +23,11 @@ public class Teacher extends Person {
         this.setPhoneNumber(phoneNumber);
     }
 
+    public Teacher(int teacherId, int courseId, String firstName, String lastName, LocalDate birthDate, String nationalCode, String phoneNumber, LocalDate entryDate) {
+        super(teacherId, firstName, lastName, birthDate, nationalCode, phoneNumber);
+        this.courseId = courseId;
+    }
+
 
     public int getCourseId() {
         return courseId;
