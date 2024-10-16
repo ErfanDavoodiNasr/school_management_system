@@ -41,8 +41,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         PreparedStatement pst = getPreparedStatement(UPDATE_TEACHER);
         pst.setString(1, teacher.getFirst_name());
         pst.setString(2, teacher.getLast_name());
-        pst.setInt(3, teacher.getCourseId());
-        pst.setString(4, teacher.getNationalCode());
+        pst.setString(3, teacher.getNationalCode());
         return pst.executeUpdate() > 0;
     }
 

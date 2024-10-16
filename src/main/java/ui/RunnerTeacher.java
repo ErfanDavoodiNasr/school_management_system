@@ -74,9 +74,8 @@ public class RunnerTeacher {
         try {
             String firstName = input("enter first name: ");
             String lastName = input("enter last name: ");
-            int courseId = intInput("enter courseId: ");
             String nationalCode = SecurityContext.teacher.getNationalCode();
-            ApplicationContext.getTeacherService().update(nationalCode, new Teacher(firstName, lastName, nationalCode, courseId));
+            ApplicationContext.getTeacherService().update(nationalCode, new Teacher(firstName, lastName, nationalCode));
             println("Teacher updated");
         } catch (Exception e) {
             println(e.getMessage());

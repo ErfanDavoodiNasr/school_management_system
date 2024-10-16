@@ -13,6 +13,12 @@ public class Teacher extends Person {
         this.courseId = courseId;
     }
 
+    public Teacher(String first_name, String last_name, String nationalCode) {
+        super(first_name, last_name, nationalCode);
+    }
+
+
+
     public Teacher(int id, String first_name, String last_name, String nationalCode) {
         super(id, first_name, last_name, nationalCode);
     }
