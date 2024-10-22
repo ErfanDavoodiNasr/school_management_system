@@ -8,7 +8,10 @@ import java.util.Optional;
 
 public interface BaseRepository<T> {
     boolean save(T t) throws SQLException;
+
     boolean remove(T t) throws SQLException;
+
     boolean update(T t) throws SQLException;
+
     Optional<List<T>> getAll() throws SQLException;
 }
