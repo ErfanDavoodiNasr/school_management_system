@@ -20,6 +20,8 @@ public interface TeacherRepository extends BaseRepository<Teacher> {
     @Override
     Optional<List<Teacher>> getAll() throws SQLException;
 
+    boolean saveCourse(int courseId, int teacherId) throws SQLException;
+
     Optional<Teacher> getByNationalCode(String nationalCode) throws SQLException;
 
     Optional<List<TeacherStudentDto>> getAllStudents() throws SQLException;

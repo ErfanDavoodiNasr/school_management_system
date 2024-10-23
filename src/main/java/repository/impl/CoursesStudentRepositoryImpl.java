@@ -1,5 +1,6 @@
 package repository.impl;
 
+import model.dto.CertificateDto;
 import model.dto.CourseDto;
 import repository.CoursesStudentRepository;
 import util.SecurityContext;
@@ -102,6 +103,27 @@ public class CoursesStudentRepositoryImpl implements CoursesStudentRepository {
                 return Optional.empty();
             } else {
                 return Optional.of(courses);
+            }
+        }
+    }
+
+    @Override
+    public Optional<List<CertificateDto>> certificate(int studentId) throws SQLException {
+        try (Connection conn = getConnection()) {
+            PreparedStatement pst = conn.prepareStatement(STUDENT_CERTIFICATE);
+            pst.setInt(1, studentId);
+            ResultSet rs = pst.executeQuery();
+            List<CertificateDto> certificateDtoList = new ArrayList<>();
+
+            while (rs.next()) {
+                certificateDtoList.add(
+                        new CertificateDto(rs.getString("course_title"),
+                                rs.getDouble("avg_score")));
+            }
+            if (certificateDtoList.isEmpty()) {
+                throw new RuntimeException("there is some problem");
+            } else {
+                return Optional.of(certificateDtoList);
             }
         }
     }

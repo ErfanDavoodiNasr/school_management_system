@@ -6,6 +6,7 @@ import model.Student;
 import model.Teacher;
 import util.ApplicationContext;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -16,7 +17,7 @@ import static util.Help.println;
 public class RunnerAdmin {
 
 
-    public static void adminMenu(){
+    public static void adminMenu() {
         while (true) {
             println("1 - sign in");
             println("2 - sign out");
@@ -36,7 +37,7 @@ public class RunnerAdmin {
             int i = intInput("enter id: ");
             String input = input("enter national code: ");
             generateRandomCode();
-            if (ApplicationContext.getAdminService().signIn(i,input)) {
+            if (ApplicationContext.getAdminService().signIn(i, input)) {
                 println("admin sign in success");
                 admin();
                 return;
@@ -53,17 +54,59 @@ public class RunnerAdmin {
             println("1 - student setting");
             println("2 - teacher setting");
             println("3 - course setting");
-            println("4 - return to last page");
+            println("4 - exam setting");
+            println("5 - return to last page");
             Integer input = intInput("choose a number: ");
             switch (input) {
                 case 1 -> student();
                 case 2 -> teacher();
                 case 3 -> course();
-                case 4 -> {
+                case 4 -> exam();
+                case 5 -> {
                     return;
                 }
                 default -> println("choose a number between 1 and 4");
             }
+        }
+    }
+
+    private static void exam() {
+        while (true) {
+            println("1 - add exam");
+            println("2 - return to last page");
+            int input = intInput("choose a number: ");
+            switch (input) {
+                case 1 -> addExam();
+                case 2 -> {
+                    return;
+                }
+                default -> println("enter a number between 1 and 2");
+            }
+        }
+    }
+
+    private static void addExam() {
+        try {
+            String courseTitle = input("enter course title: ");
+            String examTitle = input("enter exam title: ");
+            String examDate = input("enter exam date(2005-01-01): ");
+            String examTime = input("enter exam time(12:30): ");
+            int year = Integer.parseInt(examDate.substring(0, 4));
+            int month = Integer.parseInt(examDate.substring(5, 7));
+            int day = Integer.parseInt(examDate.substring(8, 10));
+            int hour = Integer.parseInt(examTime.substring(0, 2));
+            int minute = Integer.parseInt(examTime.substring(3, 5));
+
+            if (ApplicationContext.getExamService().save(new Exam(
+                    ApplicationContext.getCourseService().getByTitle(courseTitle).get().getCourseId(),
+                    examTitle,
+                    LocalDate.of(year, month, day),
+                    LocalTime.of(hour, minute)
+            ))){
+                println("exam successfully added");
+            }
+        } catch (Exception e) {
+            println(e.getMessage());
         }
     }
 
@@ -73,18 +116,32 @@ public class RunnerAdmin {
             println("2 - update student");
             println("3 - delete student");
             println("4 - list students");
-            println("5 - return to last page");
+            println("5 - add course to student");
+            println("6 - return to last page");
             int input = intInput("choose a number: ");
             switch (input) {
                 case 1 -> addStudent();
                 case 2 -> updateStudents();
                 case 3 -> removeStudent();
                 case 4 -> listStudents();
-                case 5 -> {
+                case 5 -> saveCourseStudent();
+                case 6 -> {
                     return;
                 }
                 default -> println("enter a number between 1 and 5");
             }
+        }
+    }
+
+    private static void saveCourseStudent() {
+        String courseTitle = input("enter course title:");
+        Integer studentId = intInput("enter student id: ");
+        try {
+            if (ApplicationContext.getCoursesStudentService().save(courseTitle, studentId)) {
+                println("course successfully added to student");
+            }
+        } catch (Exception e) {
+            println(e.getMessage());
         }
     }
 
@@ -94,18 +151,32 @@ public class RunnerAdmin {
             println("2 - update teacher");
             println("3 - delete teacher");
             println("4 - list teacher");
-            println("5 - return to last page");
+            println("5 - add course to teacher");
+            println("6 - return to last page");
             int input = intInput("choose a number: ");
             switch (input) {
                 case 1 -> addTeacher();
                 case 2 -> updateTeacher();
                 case 3 -> removeTeacher();
                 case 4 -> listTeachers();
-                case 5 -> {
+                case 5 -> addCourseTeacher();
+                case 6 -> {
                     return;
                 }
                 default -> println("enter a number between 1 and 5");
             }
+        }
+    }
+
+    private static void addCourseTeacher() {
+        String courseTitle = input("enter course title: ");
+        String teacherNationalCode = input("enter teacher national code: ");
+        try {
+            if (ApplicationContext.getTeacherService().saveCourse(courseTitle, teacherNationalCode)) {
+                println("course successfully added to teacher");
+            }
+        } catch (Exception e) {
+            println(e.getMessage());
         }
     }
 
@@ -168,9 +239,9 @@ public class RunnerAdmin {
             ApplicationContext.getCourseService().save(new Course(courseTitle, courseUnit));
             ApplicationContext.getExamService().save(new Exam(ApplicationContext.getCourseService().getByTitle(courseTitle).get().getCourseId(),
                     courseTitle,
-                    LocalDate.of(year,month,day),
-                    LocalTime.of(hour,minute)
-                    ));
+                    LocalDate.of(year, month, day),
+                    LocalTime.of(hour, minute)
+            ));
             println("exam and course successfully added");
         } catch (Exception e) {
             println(e.getMessage());
@@ -246,7 +317,7 @@ public class RunnerAdmin {
             }
             int courseUnit = intInput("enter course unit: ");
             String newCourseTitle = input("enter course title: ");
-            ApplicationContext.getCourseService().update(courseTitle, new Course(course.get().getCourseId(),newCourseTitle, courseUnit));
+            ApplicationContext.getCourseService().update(courseTitle, new Course(course.get().getCourseId(), newCourseTitle, courseUnit));
             println("Course updated");
         } catch (Exception e) {
             println(e.getMessage());
@@ -263,7 +334,7 @@ public class RunnerAdmin {
             String firstName = input("enter first name: ");
             String lastName = input("enter last name: ");
             int courseId = intInput("enter courseId: ");
-            ApplicationContext.getTeacherService().update(nationalCode, new Teacher(firstName, lastName, nationalCode,courseId));
+            ApplicationContext.getTeacherService().update(nationalCode, new Teacher(firstName, lastName, nationalCode, courseId));
             println("Teacher updated");
         } catch (Exception e) {
             println(e.getMessage());

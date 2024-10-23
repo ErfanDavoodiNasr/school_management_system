@@ -23,8 +23,8 @@ public class ApplicationContext {
         studentRepository = new StudentRepositoryImpl();
         studentService = new StudentServiceImpl(studentRepository);
         teacherRepository = new TeacherRepositoryImpl();
-        teacherService = new TeacherServiceImpl(teacherRepository,studentRepository);
         courseRepository = new CourseRepositoryImpl();
+        teacherService = new TeacherServiceImpl(teacherRepository,studentRepository,courseRepository);
         courseService = new CourseServiceImpl(courseRepository);
         examRepository = new ExamRepositoryImpl();
         examService = new ExamServiceImpl(examRepository);

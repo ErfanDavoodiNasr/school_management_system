@@ -16,10 +16,17 @@ public class DatabaseQuery {
     public static final String DELETE_STUDENT_ID_EXAM = "DELETE FROM exams_students WHERE student_id = ?";
     public static final String DELETE_STUDENT_ID_COURSES = "DELETE FROM courses_students WHERE student_id = ?";
     public static final String GRADING_TO_STUDENT = "UPDATE courses_students SET avg_score = ? WHERE student_id = ? and course_id = ?";
+    public static final String STUDENT_CERTIFICATE = """
+            select c.course_title, cs.avg_score
+            from courses_students cs
+                     join courses c on c.course_id = cs.course_id
+            where cs.student_id = ?;
+            """;
     // teacher
     public static final String ADD_NEW_TEACHER = "INSERT INTO teachers (first_name, last_name, national_code, course_id) VALUES (?, ?, ?, ?)";
     public static final String DELETE_TEACHER = "DELETE FROM teachers WHERE teacher_id = ?";
     public static final String GET_TEACHER_BY_NATIONAL_CODE = "SELECT * FROM teachers WHERE national_code = ?";
+    public static final String ADD_COURSE_TO_TEACHER = "update teachers set course_id = ? where teacher_id = ?;";
     public static final String GET_ALL_TEACHERS = "SELECT * FROM teachers order by last_name,first_name,teacher_id";
     public static final String UPDATE_TEACHER = "UPDATE teachers SET first_name = ?, last_name = ? WHERE national_code = ?";
     public static final String GET_TEACHER_BY_ID_NATIONAL_CODE = "select * from teachers where teacher_id = ? and national_code = ?";

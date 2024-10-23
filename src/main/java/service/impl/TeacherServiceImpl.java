@@ -1,8 +1,12 @@
 package service.impl;
 
+import exception.CourseNotFoundException;
+import exception.TeacherNotFoundException;
+import model.Course;
 import model.Student;
 import model.Teacher;
 import model.dto.TeacherStudentDto;
+import repository.CourseRepository;
 import repository.StudentRepository;
 import repository.TeacherRepository;
 import service.TeacherService;
@@ -15,10 +19,12 @@ import java.util.Optional;
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository tr;
     private final StudentRepository sr;
+    private final CourseRepository cs;
 
-    public TeacherServiceImpl(TeacherRepository tr, StudentRepository sr) {
+    public TeacherServiceImpl(TeacherRepository tr, StudentRepository sr, CourseRepository cs) {
         this.tr = tr;
         this.sr = sr;
+        this.cs = cs;
     }
 
     @Override
@@ -71,6 +77,19 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Optional<Teacher> getByNationalCode(String nationalCode) throws SQLException {
         return tr.getByNationalCode(nationalCode);
+    }
+
+    @Override
+    public boolean saveCourse(String courseTitle, String nationalCode) throws SQLException {
+        Optional<Course> course = cs.getByTitle(courseTitle);
+        Optional<Teacher> teacher = tr.getByNationalCode(nationalCode);
+        if (course.isEmpty()) {
+            throw new CourseNotFoundException("course does not exist");
+        } else if (teacher.isEmpty()) {
+            throw new TeacherNotFoundException("teacher with this national code does not exist");
+        } else {
+            return tr.saveCourse(course.get().getCourseId(), teacher.get().getId());
+        }
     }
 
     @Override

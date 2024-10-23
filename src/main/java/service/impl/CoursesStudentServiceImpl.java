@@ -1,6 +1,7 @@
 package service.impl;
 
 import model.Course;
+import model.dto.CertificateDto;
 import model.dto.CourseDto;
 import repository.CourseRepository;
 import repository.CoursesStudentRepository;
@@ -21,12 +22,12 @@ public class CoursesStudentServiceImpl implements CoursesStudentService {
     }
 
     @Override
-    public boolean save(String courseTitle) throws SQLException {
+    public boolean save(String courseTitle, int studentId) throws SQLException {
         Optional<Course> course = cr.getByTitle(courseTitle);
         if (course.isEmpty()) {
             throw new SQLException("Course not found");
         }
-        return csr.save(course.get().getCourseId(), SecurityContext.student.getId());
+        return csr.save(course.get().getCourseId(), studentId);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class CoursesStudentServiceImpl implements CoursesStudentService {
 
     @Override
     public Optional<List<CourseDto>> getAllUserCourses() throws SQLException {
-        if (csr.getAllUserCourses().isEmpty()){
+        if (csr.getAllUserCourses().isEmpty()) {
             throw new SQLException("Course not found");
         }
         return csr.getAllUserCourses();
@@ -49,9 +50,18 @@ public class CoursesStudentServiceImpl implements CoursesStudentService {
     @Override
     public Optional<List<CourseDto>> getAll() throws SQLException {
         Optional<List<CourseDto>> optionalCourseDtos = csr.getAll();
-        if (optionalCourseDtos.isEmpty()){
+        if (optionalCourseDtos.isEmpty()) {
             throw new SQLException("Course not found");
         }
         return optionalCourseDtos;
+    }
+
+    @Override
+    public Optional<List<CertificateDto>> certificate() throws SQLException {
+        Optional<List<CertificateDto>> optionalCertificateDtos = csr.certificate(SecurityContext.student.getId());
+        if (optionalCertificateDtos.isEmpty()) {
+            throw new RuntimeException("certificate not found");
+        }
+        return optionalCertificateDtos;
     }
 }

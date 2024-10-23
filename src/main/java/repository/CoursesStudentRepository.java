@@ -1,5 +1,6 @@
 package repository;
 
+import model.dto.CertificateDto;
 import model.dto.CourseDto;
 
 import java.sql.SQLException;
@@ -11,4 +12,5 @@ public interface CoursesStudentRepository {
     boolean remove(int courseId, int studentId) throws SQLException;
     Optional<List<CourseDto>> getAllUserCourses() throws SQLException;
     Optional<List<CourseDto>> getAll() throws SQLException;
+    Optional<List<CertificateDto>> certificate(int studentId) throws SQLException;
 }

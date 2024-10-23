@@ -70,6 +70,16 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
+    public boolean saveCourse(int courseId, int teacherId) throws SQLException {
+        try(Connection conn = getConnection()) {
+            PreparedStatement pst = conn.prepareStatement(ADD_COURSE_TO_TEACHER);
+            pst.setInt(1,courseId);
+            pst.setInt(2,teacherId);
+            return pst.executeUpdate() > 0;
+        }
+    }
+
+    @Override
     public Optional<Teacher> getByNationalCode(String nationalCode) throws SQLException {
         try (Connection conn = getConnection()) {
             PreparedStatement pst = conn.prepareStatement(GET_TEACHER_BY_NATIONAL_CODE);
