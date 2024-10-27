@@ -17,36 +17,6 @@ import static util.Help.println;
 public class RunnerAdmin {
 
 
-    public static void adminMenu() {
-        while (true) {
-            println("1 - sign in");
-            println("2 - sign out");
-            Integer input = intInput("choose a number: ");
-            switch (input) {
-                case 1 -> signIn();
-                case 2 -> {
-                    return;
-                }
-                default -> println("choose a number between 1 and 2");
-            }
-        }
-    }
-
-    private static void signIn() {
-        try {
-            int i = intInput("enter id: ");
-            String input = input("enter national code: ");
-            generateRandomCode();
-            if (ApplicationContext.getAdminService().signIn(i, input)) {
-                println("admin sign in success");
-                admin();
-                return;
-            }
-            println("your password or username is wrong");
-        } catch (Exception e) {
-            println(e.getMessage());
-        }
-    }
 
     public static void admin() {
         while (true) {

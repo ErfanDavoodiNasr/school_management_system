@@ -13,23 +13,6 @@ import static util.Help.*;
 
 public class RunnerTeacher {
 
-    public static void teacherMenu() {
-        while (true) {
-            println("1 - sign in");
-            println("2 - sign up");
-            println("3 - sign out");
-            Integer input = intInput("choose a number: ");
-            switch (input) {
-                case 1 -> signIn();
-                case 2 -> signUp();
-                case 3 -> {
-                    signOut();
-                    return;
-                }
-                default -> println("choose a number between 1 and 3");
-            }
-        }
-    }
 
     public static void teacher() {
         while (true) {
@@ -138,36 +121,4 @@ public class RunnerTeacher {
         }
     }
 
-    private static void signUp() {
-        try {
-            String firstName = input("enter first name: ");
-            String lastName = input("enter last name: ");
-            String nationalCode = input("enter national code: ");
-            int courseId = intInput("enter course id: ");
-            boolean result = ApplicationContext.getTeacherService().save(new Teacher(firstName, lastName, nationalCode, courseId));
-            if (result) {
-                println("teacher created successfully");
-            } else {
-                println("teacher could not be created");
-            }
-        } catch (Exception e) {
-            println(e.getMessage());
-        }
-    }
-
-    private static void signIn() {
-        try {
-            int i = intInput("enter teacher id: ");
-            String input = input("enter national code: ");
-            generateRandomCode();
-            if (ApplicationContext.getTeacherService().signIn(i, input)) {
-                println("teacher sign in success");
-                teacher();
-                return;
-            }
-            println("your password or username is wrong");
-        } catch (Exception e) {
-            println(e.getMessage());
-        }
-    }
 }

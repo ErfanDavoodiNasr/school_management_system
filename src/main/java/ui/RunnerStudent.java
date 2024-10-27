@@ -14,53 +14,6 @@ import static util.Help.*;
 
 public class RunnerStudent {
 
-    public static void studentMenu() {
-        while (true) {
-            println("1 - sign in");
-            println("2 - sign up");
-            println("3 - sign out");
-            Integer input = intInput("choose a number: ");
-            switch (input) {
-                case 1 -> signIn();
-                case 2 -> signUp();
-                case 3 -> {
-                    signOut();
-                    return;
-                }
-                default -> println("choose a number between 1 and 3");
-            }
-        }
-    }
-
-    private static void signUp() {
-        try {
-            String firstName = input("enter first name: ");
-            String lastName = input("enter last name: ");
-            String birthDate = input("enter birth date(2005-01-01): ");
-            String nationalCode = input("enter national code: ");
-            String phoneNumber = input("enter phone number: ");
-            int year = Integer.parseInt(birthDate.substring(0, 4));
-            int month = Integer.parseInt(birthDate.substring(5, 7));
-            int day = Integer.parseInt(birthDate.substring(8, 10));
-            generateRandomCode();
-            if (ApplicationContext.getStudentService().save(new Student(
-                    firstName,
-                    lastName,
-                    LocalDate.of(year, month, day),
-                    nationalCode,
-                    phoneNumber,
-                    LocalDate.now()
-            ))) {
-                println("Student added successfully");
-            } else {
-                println("Student not added successfully");
-            }
-        } catch (Exception e) {
-            println(e.getMessage());
-        }
-    }
-
-
     public static void student() {
         while (true) {
             println("1 - add course");
@@ -167,20 +120,5 @@ public class RunnerStudent {
         }
     }
 
-    public static void signIn() {
-        try {
-            int i = intInput("enter student id: ");
-            String input = input("enter national code: ");
-            generateRandomCode();
-            if (ApplicationContext.getStudentService().signIn(i, input)) {
-                println("student sign in success");
-                student();
-                return;
-            }
-            println("your password or username is wrong");
-        } catch (Exception e) {
-            println(e.getMessage());
-        }
-    }
 
 }
