@@ -3,7 +3,11 @@ package ir.ncttrade.repository.impl;
 import ir.ncttrade.base.AbstractBaseRepository;
 import ir.ncttrade.model.Course;
 import ir.ncttrade.repository.CourseRepository;
+
+import javax.persistence.EntityManager;
 import java.util.List;
+
+import static ir.ncttrade.util.EntityManagerProvider.getEntityManager;
 
 public class CourseRepositoryImpl extends AbstractBaseRepository<Course,Integer> implements CourseRepository {
 
@@ -13,12 +17,7 @@ public class CourseRepositoryImpl extends AbstractBaseRepository<Course,Integer>
     }
 
     @Override
-    public void update(Long oldCourseId, Course newCourse) {
-
-    }
-
-    @Override
-    public List<Course> findAll() {
-        return List.of();
+    public String getEntityQuery() {
+        return "Course";
     }
 }

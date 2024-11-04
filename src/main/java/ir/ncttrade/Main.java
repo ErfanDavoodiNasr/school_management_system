@@ -1,16 +1,21 @@
 package ir.ncttrade;
 
-import ir.ncttrade.model.Course;
-import ir.ncttrade.repository.impl.CourseRepositoryImpl;
+
+import ir.ncttrade.model.Student;
+import ir.ncttrade.repository.impl.StudentRepositoryImpl;
 
 public class Main {
     public static void main(String[] args) {
-        Course c1 = Course.builder()
-                .courseTitle("python")
-                .courseUnit(5)
+        System.out.println("Hello World!");
+
+        Student s1 = Student.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .phoneNumber("0911123905929")
+                .nationalCode("010123836184")
                 .build();
-
-        CourseRepositoryImpl cr = new CourseRepositoryImpl();
-
+        StudentRepositoryImpl sr = new StudentRepositoryImpl();
+        Student s2 = sr.upsert(s1);
+        System.out.println(s1);
     }
 }

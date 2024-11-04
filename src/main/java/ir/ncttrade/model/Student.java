@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import ir.ncttrade.base.BaseModel;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Data
 @Table(name = "students")
 public class Student extends BaseModel<Integer> {

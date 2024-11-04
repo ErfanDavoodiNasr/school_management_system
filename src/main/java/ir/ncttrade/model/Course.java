@@ -2,16 +2,18 @@ package ir.ncttrade.model;
 
 import ir.ncttrade.base.BaseModel;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Data
 @Table(name = "courses")
 public class Course extends BaseModel<Integer> {

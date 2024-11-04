@@ -3,16 +3,16 @@ package ir.ncttrade.model;
 
 import ir.ncttrade.base.BaseModel;
 import lombok.*;
-
+import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Data
 @Table(name = "exams")
 public class Exam extends BaseModel<Integer> {

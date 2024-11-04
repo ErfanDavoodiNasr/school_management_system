@@ -2,15 +2,14 @@ package ir.ncttrade.model;
 
 import ir.ncttrade.base.BaseModel;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Data
+@SuperBuilder
 @Table(name = "teachers")
 public class Teacher extends BaseModel<Integer> {
     @Column(name = "first_name" , nullable = false, columnDefinition = "varchar(50) default ''")
