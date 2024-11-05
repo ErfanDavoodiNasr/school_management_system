@@ -14,11 +14,7 @@ public abstract class AbstractBaseRepository<T extends BaseModel<ID>, ID extends
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            if (t.getId() == null) {
-                em.persist(t);
-            } else {
-                em.merge(t);
-            }
+            em.merge(t);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
