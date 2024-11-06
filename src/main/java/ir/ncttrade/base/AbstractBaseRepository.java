@@ -45,17 +45,7 @@ public abstract class AbstractBaseRepository<T extends BaseModel<ID>, ID extends
     @Override
     public T findById(ID id) {
         EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            T entity = em.find(getEntityClass(), id);
-            em.getTransaction().commit();
-            return entity;
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-        return null;
+        return em.find(getEntityClass(), id);
     }
 
     @Override
