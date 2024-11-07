@@ -54,12 +54,8 @@ public abstract class AbstractBaseRepository<T extends BaseModel<ID>, ID extends
         EntityManager em = getEntityManager();
         List results = null;
         try {
-            em.getTransaction().begin();
             Query q = em.createQuery(query);
-            em.getTransaction().commit();
             results = q.getResultList();
-        } catch (Exception e) {
-            em.getTransaction().rollback();
         } finally {
             em.close();
         }

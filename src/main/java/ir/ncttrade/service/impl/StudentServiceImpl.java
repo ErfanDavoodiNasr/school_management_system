@@ -3,10 +3,8 @@ package ir.ncttrade.service.impl;
 import ir.ncttrade.model.Student;
 import ir.ncttrade.repository.impl.StudentRepositoryImpl;
 import ir.ncttrade.service.StudentService;
-
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+
 
 public class StudentServiceImpl implements StudentService {
     private final StudentRepositoryImpl sr;

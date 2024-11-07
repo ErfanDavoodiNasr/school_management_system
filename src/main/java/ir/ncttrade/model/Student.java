@@ -11,12 +11,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Data
 @Table(name = "students")
+@NamedQuery(name = "Student.findByNationalCode", query = "SELECT s FROM Student s WHERE s.nationalCode = ?1")
 public class Student extends BaseModel<Integer> {
     @Column(name = "first_name" , nullable = false, columnDefinition = "varchar(50) default ''")
     private String firstName;
@@ -24,8 +26,9 @@ public class Student extends BaseModel<Integer> {
     private String lastName;
     @Column(name = "national_code" , nullable = false, unique = true)
     private String nationalCode;
+    @Enumerated(EnumType.STRING)
     @Column(name = "field")
-    private String field;
+    private Field field;
     @Column(name = "birth_date")
     private LocalDate birthDate;
     @Column(name = "entry_date")
@@ -33,7 +36,8 @@ public class Student extends BaseModel<Integer> {
     @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
     @Column(name = "address")
-    private String address;
+    @Embedded
+    private Address address;
     @Column(name = "email", unique = true)
     private String email;
     @Column(name = "gender")
