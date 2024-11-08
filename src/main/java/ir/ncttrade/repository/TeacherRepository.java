@@ -1,5 +1,8 @@
 package ir.ncttrade.repository;
 
-public interface TeacherRepository {
+import ir.ncttrade.base.BaseRepository;
+import ir.ncttrade.model.Teacher;
+
+public interface TeacherRepository extends BaseRepository<Teacher, Integer> {
 
 }
