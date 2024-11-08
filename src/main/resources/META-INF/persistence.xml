@@ -7,6 +7,7 @@
         <class>ir.ncttrade.model.Exam</class>
         <class>ir.ncttrade.model.Course</class>
         <class>ir.ncttrade.base.BaseModel</class>
+        <class>ir.ncttrade.model.User</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/test"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
@@ -14,6 +15,7 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgresPlusDialect"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>
