@@ -1,6 +1,8 @@
 package ir.ncttrade.model;
 
 import javax.persistence.*;
+
+import ir.ncttrade.model.enums.Field;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import java.util.ArrayList;

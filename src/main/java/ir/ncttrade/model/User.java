@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import ir.ncttrade.base.BaseModel;
+import ir.ncttrade.model.embeddable.Address;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

@@ -1,4 +1,4 @@
-package ir.ncttrade.model;
+package ir.ncttrade.model.enums;
 
 public enum Field {
     COMPUTER,
