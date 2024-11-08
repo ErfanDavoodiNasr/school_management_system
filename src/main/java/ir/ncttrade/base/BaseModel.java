@@ -12,11 +12,11 @@ import java.io.Serializable;
 
 @SuperBuilder
 @Data
-@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
+@MappedSuperclass
 public class BaseModel<ID extends Serializable> implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private ID id;
 }
